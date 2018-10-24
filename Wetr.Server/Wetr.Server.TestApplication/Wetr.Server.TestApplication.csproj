@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BF1131A7-32B9-4DF8-8BAC-FBCD47BE9E32}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wetr.Server.DAL.IDAO</RootNamespace>
-    <AssemblyName>Wetr.Server.DAL.IDAO</AssemblyName>
+    <ProjectGuid>{5B6D830A-DBF0-4B6C-83D0-68CE92400F20}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Wetr.Server.TestApplication</RootNamespace>
+    <AssemblyName>Wetr.Server.TestApplication</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,17 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICommunityDAO.cs" />
-    <Compile Include="IMeasurementDAO.cs" />
-    <Compile Include="IMeasurementDeviceDAO.cs" />
-    <Compile Include="IMeasurementTypeDAO.cs" />
-    <Compile Include="IUnitOfMeasureDAO.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wetr.Server.DAL.DTO\Wetr.Server.DAL.DTO.csproj">
-      <Project>{1383906a-ae75-4553-8641-bd9847b3abab}</Project>
-      <Name>Wetr.Server.DAL.DTO</Name>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wetr.Server.Common\Wetr.Server.Common.csproj">
+      <Project>{69A5EE7A-F516-444E-B11F-61360D57F39F}</Project>
+      <Name>Wetr.Server.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

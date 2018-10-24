@@ -7,9 +7,9 @@ using Wetr.Server.DAL.DTO;
 
 namespace Wetr.Server.DAL.IDAO
 {
-    public interface IMeasurementDAO
+    public interface IMeasurementTypeDAO
     {
-        IEnumerable<Measurement> FindAll();
-        Measurement FindByID(int id);
+        IEnumerable<MeasurementType> FindAll();
+        MeasurementType FindByID(int id);
     }
 }

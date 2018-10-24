@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BF1131A7-32B9-4DF8-8BAC-FBCD47BE9E32}</ProjectGuid>
+    <ProjectGuid>{69A5EE7A-F516-444E-B11F-61360D57F39F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wetr.Server.DAL.IDAO</RootNamespace>
-    <AssemblyName>Wetr.Server.DAL.IDAO</AssemblyName>
+    <RootNamespace>Wetr.Server.Common</RootNamespace>
+    <AssemblyName>Wetr.Server.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,18 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICommunityDAO.cs" />
-    <Compile Include="IMeasurementDAO.cs" />
-    <Compile Include="IMeasurementDeviceDAO.cs" />
-    <Compile Include="IMeasurementTypeDAO.cs" />
-    <Compile Include="IUnitOfMeasureDAO.cs" />
+    <Compile Include="ConnectionFactory.cs" />
+    <Compile Include="IConnectionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Wetr.Server.DAL.DTO\Wetr.Server.DAL.DTO.csproj">
-      <Project>{1383906a-ae75-4553-8641-bd9847b3abab}</Project>
-      <Name>Wetr.Server.DAL.DTO</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
