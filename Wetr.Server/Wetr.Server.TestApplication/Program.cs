@@ -5,7 +5,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wer.Server.DAL.DAO;
 using Wetr.Server.Common;
+using Wetr.Server.DAL.IDAO;
 
 namespace Wetr.Server.TestApplication
 {
@@ -14,14 +16,9 @@ namespace Wetr.Server.TestApplication
         static void Main(string[] args)
         {
             IConnectionFactory connFac = ConnectionFactory.CreateFromConfiguration("WeatherTracer");
-            DbConnection conn = connFac.CreateConnection();
-            DbCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"select * from province";
-            DbDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Console.WriteLine("{0}\t {1}" ,  reader["ID"], reader["Name"] );
-            }
+            ICommunityDAO comm = new CommunityDAO(connFac);
+            var x = comm.FindAll();
+            var y = comm.FindByID(5);
         }
     }
 }

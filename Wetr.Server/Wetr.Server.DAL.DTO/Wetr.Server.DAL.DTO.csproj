@@ -50,7 +50,7 @@
     <Compile Include="UnitOfMeasure.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="script.sql" />
+    <Content Include="schema.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
