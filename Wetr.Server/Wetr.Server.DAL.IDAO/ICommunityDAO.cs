@@ -11,5 +11,8 @@ namespace Wetr.Server.DAL.IDAO
     {
         IEnumerable<Community> FindAll();
         Community FindByID(int id);
+        District GetDistrictForCommunity(Community community);
+        Province GetProvinceForCommunity(Community community);
+
     }
 }
