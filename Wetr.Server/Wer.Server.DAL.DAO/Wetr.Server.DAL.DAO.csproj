@@ -42,10 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunityDAO.cs" />
+    <Compile Include="DistrictDAO.cs" />
     <Compile Include="MeasurementDAO.cs" />
     <Compile Include="MeasurementDeviceDAO.cs" />
     <Compile Include="MeasurementTypeDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProvinceDAO.cs" />
     <Compile Include="UnitOfMeasureDAO.cs" />
     <Compile Include="UserDAO.cs" />
   </ItemGroup>

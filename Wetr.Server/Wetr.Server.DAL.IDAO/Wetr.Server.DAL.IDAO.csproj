@@ -41,9 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICommunityDAO.cs" />
+    <Compile Include="IDistrictDAO.cs" />
     <Compile Include="IMeasurementDAO.cs" />
     <Compile Include="IMeasurementDeviceDAO.cs" />
     <Compile Include="IMeasurementTypeDAO.cs" />
+    <Compile Include="IProvinceDAO.cs" />
     <Compile Include="IUnitOfMeasureDAO.cs" />
     <Compile Include="IUserDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
