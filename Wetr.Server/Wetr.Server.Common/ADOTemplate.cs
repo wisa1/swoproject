@@ -54,6 +54,19 @@ namespace Wetr.Server.Common
             }
         }
 
+        public async Task<decimal> ExecuteScalarAsync(string sql, SqlParameter[] parameters = null)
+        {
+            using (DbConnection connection = connectionFactory.CreateConnection())
+            {
+                using (DbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = sql;
+                    AddParameters(parameters, command);
+                    return (decimal)(await command.ExecuteScalarAsync());
+                }
+            }
+        }
+
         private void AddParameters(SqlParameter[] parameters, DbCommand command)
         {
             if (parameters == null)

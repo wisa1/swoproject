@@ -29,12 +29,12 @@ namespace Wer.Server.DAL.DAO
         }
 
         public async Task<IEnumerable<User>> FindAllAsync()
-         => await template.QueryAsync<User>("SELECT * FROM User", userMapper);
+         => await template.QueryAsync<User>("SELECT * FROM [User]", userMapper);
 
         public async Task<User> FindByIdAsync(int id)
-          => (await template.QueryAsync<User>("SELECT * FROM User WHERE ID = @ID",
+          => (await template.QueryAsync<User>("SELECT * FROM [User] WHERE ID = @ID",
                                    userMapper,
-                                   new SqlParameter[] { new SqlParameter("ID", id) }
+                                   new SqlParameter[] { new SqlParameter("@ID", id) }
                                   )).SingleOrDefault();
     }
 }

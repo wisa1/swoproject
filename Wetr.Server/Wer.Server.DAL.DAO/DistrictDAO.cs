@@ -29,10 +29,10 @@ namespace Wer.Server.DAL.DAO
         }
 
         public async Task<IEnumerable<District>> FindAllAsync()
-          => await template.QueryAsync<District>("Select * from Community", districtMapper);
+          => await template.QueryAsync<District>("SELECT * FROM [District]", districtMapper);
 
         public async Task<District> FindByIDAsync(int id)
-          => (await template.QueryAsync<District>("Select * from Community where ID = @ID",
+          => (await template.QueryAsync<District>("SELECT * FROM [District] WHERE ID = @ID",
                                        districtMapper,
                                        new Wetr.Server.Common.SqlParameter[] { new Wetr.Server.Common.SqlParameter("@ID", id) }
                                       )).SingleOrDefault();

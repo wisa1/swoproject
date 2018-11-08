@@ -31,12 +31,12 @@ namespace Wer.Server.DAL.DAO
             this.template = new ADOTemplate(connectionFactory);
         }
         public async Task<IEnumerable<Measurement>> FindAllAsync()
-         => await template.QueryAsync<Measurement>("SELECT * FROM User", measurementMapper);
+         => await template.QueryAsync<Measurement>("SELECT * FROM [Measurement]", measurementMapper);
 
         public async Task<Measurement> FindByIDAsync(int id)
-         => (await template.QueryAsync<Measurement>("Select * FROM User WHERE ID = @ID",
+         => (await template.QueryAsync<Measurement>("Select * FROM [Measurement] WHERE ID = @ID",
                                  measurementMapper,
-                                 new SqlParameter[] { new SqlParameter("ID", id) }
+                                 new SqlParameter[] { new SqlParameter("@ID", id) }
                                 )).SingleOrDefault();
     }
 }

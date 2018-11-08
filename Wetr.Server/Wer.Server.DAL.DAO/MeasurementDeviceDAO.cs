@@ -37,7 +37,7 @@ namespace Wer.Server.DAL.DAO
         public async Task<MeasurementDevice> FindByIDAsync(int id)
          => (await template.QueryAsync<MeasurementDevice>("Select * FROM [Measurement Device] WHERE ID = @ID",
                                  measurementDeviceMapper,
-                                 new SqlParameter[] { new SqlParameter("ID", id) }
+                                 new SqlParameter[] { new SqlParameter("@ID", id) }
                                 )).SingleOrDefault();
     }
 
