@@ -18,7 +18,7 @@ namespace Wetr.Server.Common
             this.connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
         }
 
-        public IEnumerable<T> Query<T>(string sql, RowMapper<T> mapper, SqlParameter[] parameters = null)
+        public async Task<IEnumerable<T>> QueryAsync<T>(string sql, RowMapper<T> mapper, SqlParameter[] parameters = null)
         {
             using (DbConnection connection = connectionFactory.CreateConnection())
             {
@@ -28,7 +28,7 @@ namespace Wetr.Server.Common
                     AddParameters(parameters, command);
 
                     var items = new List<T>();
-                    using (IDataReader reader = command.ExecuteReader())
+                    using (IDataReader reader = await command.ExecuteReaderAsync())
                     {
                         while (reader.Read())
                         {
@@ -40,7 +40,7 @@ namespace Wetr.Server.Common
             }
         }
 
-        public int Execute(string sql, SqlParameter[] parameters = null)
+        public async Task<int> ExecuteAsync(string sql, SqlParameter[] parameters = null)
         {
             using (DbConnection connection = connectionFactory.CreateConnection())
             {
@@ -49,7 +49,7 @@ namespace Wetr.Server.Common
                     command.CommandText = sql;
                     AddParameters(parameters, command);
 
-                    return command.ExecuteNonQuery();
+                    return (await command.ExecuteNonQueryAsync());                   
                 }
             }
         }

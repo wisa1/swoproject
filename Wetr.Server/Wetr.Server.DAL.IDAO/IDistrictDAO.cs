@@ -9,7 +9,7 @@ namespace Wetr.Server.DAL.IDAO
 {
     public interface IDistrictDAO
     {
-        IEnumerable<District> FindAll();
-        District FindByID(int id);
+        Task<IEnumerable<District>> FindAllAsync();
+        Task<District> FindByIDAsync(int id);
     }
 }

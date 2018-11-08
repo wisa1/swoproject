@@ -9,7 +9,7 @@ namespace Wetr.Server.DAL.IDAO
 {
     public interface IUserDAO
     {
-        IEnumerable<User> FindAll();
-        User FindById(int id);
+        Task<IEnumerable<User>> FindAllAsync();
+        Task<User> FindByIdAsync(int id);
     }
 }

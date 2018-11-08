@@ -27,13 +27,14 @@ namespace Wer.Server.DAL.DAO
         {
             this.template = new ADOTemplate(connectionFactory);
         }
-        public IEnumerable<User> FindAll()
-         => template.Query<User>("SELECT * FROM User", userMapper);
 
-        public User FindById(int id)
-         => template.Query<User>("Select * FROM User WHERE ID = @ID", 
-                                 userMapper, 
-                                 new SqlParameter[] { new SqlParameter("ID", id) }
-                                ).SingleOrDefault();
+        public async Task<IEnumerable<User>> FindAllAsync()
+         => await template.QueryAsync<User>("SELECT * FROM User", userMapper);
+
+        public async Task<User> FindByIdAsync(int id)
+          => (await template.QueryAsync<User>("SELECT * FROM User WHERE ID = @ID",
+                                   userMapper,
+                                   new SqlParameter[] { new SqlParameter("ID", id) }
+                                  )).SingleOrDefault();
     }
 }

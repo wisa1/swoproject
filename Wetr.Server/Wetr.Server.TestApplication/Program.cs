@@ -17,8 +17,7 @@ namespace Wetr.Server.TestApplication
         {
             IConnectionFactory connFac = ConnectionFactory.CreateFromConfiguration("WeatherTracer");
             ICommunityDAO comm = new CommunityDAO(connFac);
-            var x = comm.FindAll();
-            var y = comm.FindByID(5);
+            
         }
     }
 }

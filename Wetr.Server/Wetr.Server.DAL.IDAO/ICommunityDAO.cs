@@ -9,10 +9,10 @@ namespace Wetr.Server.DAL.IDAO
 {
     public interface ICommunityDAO
     {
-        IEnumerable<Community> FindAll();
-        Community FindByID(int id);
-        District GetDistrictForCommunity(Community community);
-        Province GetProvinceForCommunity(Community community);
+        Task<IEnumerable<Community>> FindAllAsync();
+        Task<Community> FindByIDAsync(int id);
+        Task<District> GetDistrictForCommunityAsync(Community community);
+        Task<Province> GetProvinceForCommunityAsync(Community community);
 
     }
 }

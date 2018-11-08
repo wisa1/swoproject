@@ -36,21 +36,21 @@ namespace Wer.Server.DAL.DAO
 
         }
 
-        public IEnumerable<Community> FindAll()
-            => template.Query<Community>("Select * from Community", communityMapper);
+        public async Task<IEnumerable<Community>> FindAllAsync()
+            => await template.QueryAsync<Community>("Select * from Community", communityMapper);
 
-        public Community FindByID(int id)
-            => template.Query<Community>("Select * from Community where ID = @ID",
+        public async Task<Community> FindByIDAsync(int id)
+            => (await template.QueryAsync<Community>("Select * from Community where ID = @ID",
                                        communityMapper,
                                        new Wetr.Server.Common.SqlParameter[] { new Wetr.Server.Common.SqlParameter("@ID", id) }
-                                      ).SingleOrDefault();
+                                      )).SingleOrDefault();
 
-        public District GetDistrictForCommunity(Community community)
-            => this.districtDAO.FindByID(community.DistrictID);
+        public async Task<District> GetDistrictForCommunityAsync(Community community)
+            => await this.districtDAO.FindByIDAsync(community.DistrictID);
 
-        public Province GetProvinceForCommunity(Community community)
-            => this.provinceDAO.FindByID(
-                    (this.GetDistrictForCommunity(community).ProvinceID));
+        public async Task<Province> GetProvinceForCommunityAsync(Community community)
+            => await this.provinceDAO.FindByIDAsync(
+                    ((await this.GetDistrictForCommunityAsync(community)).ProvinceID));
 
     }
 }

@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Wetr.Server.Common;
 using Wetr.Server.DAL.DTO;
+using Wetr.Server.DAL.IDAO;
 using static Wetr.Server.Common.ADOTemplate;
 
 namespace Wer.Server.DAL.DAO
 {
-    class UnitOfMeasureDAO
+    class UnitOfMeasureDAO : IUnitOfMeasureDAO
     {
         private ADOTemplate template;
         private RowMapper<UnitOfMeasure> unitOfMeasureMapper = record =>
@@ -25,13 +26,13 @@ namespace Wer.Server.DAL.DAO
         {
             this.template = new ADOTemplate(connectionFactory);
         }
-        public IEnumerable<UnitOfMeasure> findAll()
-         => template.Query<UnitOfMeasure>("SELECT * FROM [Unit Of Measure]", unitOfMeasureMapper);
+        public async Task<IEnumerable<UnitOfMeasure>> FindAllAsync()
+         => await template.QueryAsync<UnitOfMeasure>("SELECT * FROM [Unit Of Measure]", unitOfMeasureMapper);
 
-        public UnitOfMeasure findById(int id)
-         => template.Query<UnitOfMeasure>("Select * FROM [Unit Of Measure] WHERE ID = @ID",
-                                 unitOfMeasureMapper,
-                                 new SqlParameter[] { new SqlParameter("ID", id) }
-                                ).SingleOrDefault();
+        public async Task<UnitOfMeasure> FindByIDAsync(int id)
+          =>  (await template.QueryAsync<UnitOfMeasure>("SELECT * FROM [Unit Of Measure] WHERE ID = @ID",
+                                                    unitOfMeasureMapper,
+                                                    new SqlParameter[] { new SqlParameter("ID", id) }
+                                                    )).SingleOrDefault();
     }
 }

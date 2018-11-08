@@ -9,7 +9,7 @@ namespace Wetr.Server.DAL.IDAO
 {
     public interface IMeasurementTypeDAO
     {
-        IEnumerable<MeasurementType> FindAll();
-        MeasurementType FindByID(int id);
+        Task<IEnumerable<MeasurementType>> FindAllAsync();
+        Task<MeasurementType> FindByIDAsync(int id);
     }
 }

@@ -27,14 +27,14 @@ namespace Wer.Server.DAL.DAO
             this.template = new ADOTemplate(connectionFactory);
         }
 
-        public IEnumerable<Province> FindAll()
-          => template.Query<Province>("Select * from Community", provinceMapper);
+        public async Task<IEnumerable<Province>> FindAllAsync()
+          => await template.QueryAsync<Province>("Select * from Community", provinceMapper);
 
-        public Province FindByID(int id)
-          => template.Query<Province>("Select * from Community where ID = @ID",
+        public async Task<Province> FindByIDAsync(int id)
+          => (await template.QueryAsync<Province>("Select * from Community where ID = @ID",
                                        provinceMapper,
                                        new Wetr.Server.Common.SqlParameter[] { new Wetr.Server.Common.SqlParameter("@ID", id) }
-                                      ).SingleOrDefault();
+                                      )).SingleOrDefault();
     }
 }
-}
+
