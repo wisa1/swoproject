@@ -11,5 +11,6 @@ namespace Wetr.Server.DAL.IDAO
     {
         Task<IEnumerable<User>> FindAllAsync();
         Task<User> FindByIdAsync(int id);
+        Task<int> InsertAsync(User user);
     }
 }

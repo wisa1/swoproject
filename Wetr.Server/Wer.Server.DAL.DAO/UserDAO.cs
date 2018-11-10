@@ -8,7 +8,7 @@ using Wetr.Server.DAL.IDAO;
 using Wetr.Server.DTO;
 using static Wetr.Server.Common.ADOTemplate;
 
-namespace Wer.Server.DAL.DAO
+namespace Wetr.Server.DAL.DAO
 {
     public class UserDAO : IUserDAO
     {
@@ -36,5 +36,10 @@ namespace Wer.Server.DAL.DAO
                                    userMapper,
                                    new SqlParameter[] { new SqlParameter("@ID", id) }
                                   )).SingleOrDefault();
+
+        public async Task<int> InsertAsync(User user)
+         => (await template.ExecuteAsync("INSERT INTO [User] (FirstName, LastName) VALUES(@FirstName, @LastName)",
+                                                new SqlParameter[] {new SqlParameter("@FirstName", user.FirstName),
+                                                                    new SqlParameter("@LastName", user.LastName)}));
     }
 }

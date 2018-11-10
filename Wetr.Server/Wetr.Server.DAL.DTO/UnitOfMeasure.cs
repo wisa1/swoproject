@@ -9,6 +9,7 @@ namespace Wetr.Server.DAL.DTO
     public class UnitOfMeasure
     {
         public int ID { get; set; }
-        public string Code { get; set; }
+        public string Abbreviation { get; set; }
+        public string Description { get; set; }
     }
 }

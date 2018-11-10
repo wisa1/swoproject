@@ -8,9 +8,9 @@ using Wetr.Server.DAL.DTO;
 using Wetr.Server.DAL.IDAO;
 using static Wetr.Server.Common.ADOTemplate;
 
-namespace Wer.Server.DAL.DAO
+namespace Wetr.Server.DAL.DAO
 {
-    class UnitOfMeasureDAO : IUnitOfMeasureDAO
+    public class UnitOfMeasureDAO : IUnitOfMeasureDAO
     {
         private ADOTemplate template;
         private RowMapper<UnitOfMeasure> unitOfMeasureMapper = record =>
@@ -18,7 +18,8 @@ namespace Wer.Server.DAL.DAO
             return new UnitOfMeasure()
             {
                 ID = (int)record["ID"],
-                Code = (string)record["Code"]
+                Abbreviation = (string)record["Abbreviation"],
+                Description = (string)record["Description"]
             };
         };
 
@@ -34,5 +35,10 @@ namespace Wer.Server.DAL.DAO
                                                     unitOfMeasureMapper,
                                                     new SqlParameter[] { new SqlParameter("ID", id) }
                                                     )).SingleOrDefault();
+
+        public async Task<int> InsertAsync(UnitOfMeasure unitOfMeasure)
+             => (await template.ExecuteAsync("INSERT INTO [Unit of Measure] (Abbreviation, Description) VALUES(@Abbreviation, @Description)",
+                                                new SqlParameter[] {new SqlParameter("@Abbreviation", unitOfMeasure.Abbreviation),
+                                                                    new SqlParameter("@Description", unitOfMeasure.Description)}));
     }
 }

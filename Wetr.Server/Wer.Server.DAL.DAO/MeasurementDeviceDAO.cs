@@ -8,7 +8,7 @@ using Wetr.Server.DAL.DTO;
 using Wetr.Server.DAL.IDAO;
 using static Wetr.Server.Common.ADOTemplate;
 
-namespace Wer.Server.DAL.DAO
+namespace Wetr.Server.DAL.DAO
 {
     public class MeasurementDeviceDAO : IMeasurementDeviceDAO
     {

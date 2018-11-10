@@ -8,9 +8,9 @@ using Wetr.Server.DAL.DTO;
 using Wetr.Server.DAL.IDAO;
 using static Wetr.Server.Common.ADOTemplate;
 
-namespace Wer.Server.DAL.DAO
+namespace Wetr.Server.DAL.DAO
 {
-    class ProvinceDAO : IProvinceDAO
+    public class ProvinceDAO : IProvinceDAO
     {
         private readonly ADOTemplate template;
         private RowMapper<Province> provinceMapper = record =>
@@ -28,13 +28,17 @@ namespace Wer.Server.DAL.DAO
         }
 
         public async Task<IEnumerable<Province>> FindAllAsync()
-          => await template.QueryAsync<Province>("SELECT * FROM [Community]", provinceMapper);
+          => await template.QueryAsync<Province>("SELECT * FROM [Province]", provinceMapper);
 
         public async Task<Province> FindByIDAsync(int id)
-          => (await template.QueryAsync<Province>("SELECT * FROM [Community] WHERE ID = @ID",
+          => (await template.QueryAsync<Province>("SELECT * FROM [Province] WHERE ID = @ID",
                                        provinceMapper,
-                                       new Wetr.Server.Common.SqlParameter[] { new Wetr.Server.Common.SqlParameter("@ID", id) }
+                                       new SqlParameter[] { new SqlParameter("@ID", id) }
                                       )).SingleOrDefault();
+
+        public async Task<int> InsertAsync(Province province)
+          => (await template.ExecuteAsync("INSERT INTO [Province] (Name) VALUES(@Name)",
+                                            new SqlParameter[] { new SqlParameter("@Name", province.Name) }));
     }
 }
 

@@ -9,7 +9,7 @@ using static Wetr.Server.Common.ADOTemplate;
 using Wetr.Server.DAL.DTO;
 using Wetr.Server.DAL.IDAO;
 
-namespace Wer.Server.DAL.DAO
+namespace Wetr.Server.DAL.DAO
 {
     public class CommunityDAO : ICommunityDAO
     {
