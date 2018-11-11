@@ -11,6 +11,8 @@ namespace Wetr.Server.DAL.IDAO
     {
         Task<IEnumerable<Community>> FindAllAsync();
         Task<Community> FindByIDAsync(int id);
+        Task<int> InsertAsync(Community community);
+
         Task<District> GetDistrictForCommunityAsync(Community community);
         Task<Province> GetProvinceForCommunityAsync(Community community);
 

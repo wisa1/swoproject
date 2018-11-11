@@ -11,5 +11,6 @@ namespace Wetr.Server.DAL.IDAO
     {
         Task<IEnumerable<MeasurementDevice>> FindAllAsync();
         Task<MeasurementDevice> FindByIDAsync(int id);
+        Task<int> InsertAsync(MeasurementDevice measurementDevice);
     }
 }

@@ -11,5 +11,6 @@ namespace Wetr.Server.DAL.IDAO
     {
         Task<IEnumerable<District>> FindAllAsync();
         Task<District> FindByIDAsync(int id);
+        Task<int> InsertAsync(District district);
     }
 }

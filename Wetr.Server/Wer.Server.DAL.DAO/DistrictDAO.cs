@@ -36,5 +36,10 @@ namespace Wetr.Server.DAL.DAO
                                        districtMapper,
                                        new Wetr.Server.Common.SqlParameter[] { new Wetr.Server.Common.SqlParameter("@ID", id) }
                                       )).SingleOrDefault();
+
+        public async Task<int> InsertAsync(District district)
+          => (await template.ExecuteAsync("INSERT INTO [District] (ProvinceID, Name) VALUES(@ProvinceID, @Name)",
+                                    new SqlParameter[] { new SqlParameter("@ProvinceID", district.ProvinceID),
+                                                         new SqlParameter("@Name", district.Name) }));
     }
 }

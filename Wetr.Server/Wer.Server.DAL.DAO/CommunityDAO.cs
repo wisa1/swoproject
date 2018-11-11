@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
 using Wetr.Server.Common;
-using static Wetr.Server.Common.ADOTemplate;
 using Wetr.Server.DAL.DTO;
 using Wetr.Server.DAL.IDAO;
+using static Wetr.Server.Common.ADOTemplate;
 
 namespace Wetr.Server.DAL.DAO
 {
@@ -45,12 +44,20 @@ namespace Wetr.Server.DAL.DAO
                                        new Wetr.Server.Common.SqlParameter[] { new Wetr.Server.Common.SqlParameter("@ID", id) }
                                       )).SingleOrDefault();
 
+        public async Task<int> InsertAsync(Community community)
+            => (await template.ExecuteAsync("INSERT INTO [Community] ([Postal Code], DistrictID, Name) VALUES(@PostalCode, @DistrictID, @Name)",
+                                    new SqlParameter[] { new SqlParameter("@PostalCode", community.PostalCode),
+                                                         new SqlParameter("@DistrictID", community.DistrictID),
+                                                         new SqlParameter("@Name", community.Name}));
+
         public async Task<District> GetDistrictForCommunityAsync(Community community)
             => await this.districtDAO.FindByIDAsync(community.DistrictID);
 
         public async Task<Province> GetProvinceForCommunityAsync(Community community)
             => await this.provinceDAO.FindByIDAsync(
                     ((await this.GetDistrictForCommunityAsync(community)).ProvinceID));
+
+
 
     }
 }

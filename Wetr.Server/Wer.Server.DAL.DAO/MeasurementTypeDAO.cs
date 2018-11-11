@@ -35,5 +35,9 @@ namespace Wetr.Server.DAL.DAO
                                  measurementTypeMapper,
                                  new SqlParameter[] { new SqlParameter("@ID", id) }
                                 )).SingleOrDefault();
+
+        public async Task<int> InsertAsync(MeasurementType measurementType)
+          => (await template.ExecuteAsync("INSERT INTO [Measurement Type] (Description) VALUES(@Description)",
+                                            new SqlParameter[] { new SqlParameter("@Description", measurementType.Description)}));
     }
 }
