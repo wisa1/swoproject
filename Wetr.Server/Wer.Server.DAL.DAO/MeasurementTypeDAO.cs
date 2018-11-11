@@ -10,7 +10,7 @@ using static Wetr.Server.Common.ADOTemplate;
 
 namespace Wetr.Server.DAL.DAO
 {
-    class MeasurementTypeDAO : IMeasurementTypeDAO
+    public class MeasurementTypeDAO : IMeasurementTypeDAO
     {
         private ADOTemplate template;
         private RowMapper<MeasurementType> measurementTypeMapper = record =>

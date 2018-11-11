@@ -10,7 +10,7 @@ using static Wetr.Server.Common.ADOTemplate;
 
 namespace Wetr.Server.DAL.DAO
 {
-    class DistrictDAO : IDistrictDAO
+    public class DistrictDAO : IDistrictDAO
     {
         private readonly ADOTemplate template;
         private RowMapper<District> districtMapper = record =>

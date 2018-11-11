@@ -20,9 +20,9 @@ namespace Wetr.Server.DAL.DAO
                 ID = (int)record["ID"],
                 Address = (string)record["Address"],
                 CommunityID = (int)record["CommunityID"],
-                DeviceName = (string)record["DeviceName"],
-                Latitude = (float)record["Latitude"],
-                Longitude = (float)record["Longitude"]
+                DeviceName = (string)record["Device Name"],
+                Latitude = (double)record["Latitude"],
+                Longitude = (double)record["Longitude"]
 
             };
         };
@@ -43,7 +43,7 @@ namespace Wetr.Server.DAL.DAO
         public async Task<int> InsertAsync(MeasurementDevice measurementDevice)
           => (await template.ExecuteAsync("INSERT INTO [Measurement Device] (CommunityID, [Device Name], Address, Longitude, Latitude) " +
                                           "VALUES(@CommunityID, @DeviceName, @Address, @Longitude, @Latitude)",
-                                    new SqlParameter[] { new SqlParameter("@Description", measurementDevice.CommunityID) ,
+                                    new SqlParameter[] { new SqlParameter("@CommunityID", measurementDevice.CommunityID) ,
                                                          new SqlParameter("@DeviceName", measurementDevice.DeviceName),
                                                          new SqlParameter("@Address", measurementDevice.Address),
                                                          new SqlParameter("@Longitude", measurementDevice.Longitude),

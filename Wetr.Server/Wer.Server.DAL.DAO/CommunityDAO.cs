@@ -48,7 +48,7 @@ namespace Wetr.Server.DAL.DAO
             => (await template.ExecuteAsync("INSERT INTO [Community] ([Postal Code], DistrictID, Name) VALUES(@PostalCode, @DistrictID, @Name)",
                                     new SqlParameter[] { new SqlParameter("@PostalCode", community.PostalCode),
                                                          new SqlParameter("@DistrictID", community.DistrictID),
-                                                         new SqlParameter("@Name", community.Name}));
+                                                         new SqlParameter("@Name", community.Name)}));
 
         public async Task<District> GetDistrictForCommunityAsync(Community community)
             => await this.districtDAO.FindByIDAsync(community.DistrictID);

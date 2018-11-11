@@ -11,8 +11,8 @@ namespace Wetr.Server.DAL.DTO
         public int ID { get; set; }
         public int TypeID { get; set; }
         public int DeviceID { get; set; }
-        public float Value { get; set; }
+        public double Value { get; set; }
         public int UnitOfMeasureID { get; set; }
-        public int Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

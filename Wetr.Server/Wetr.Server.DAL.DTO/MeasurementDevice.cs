@@ -12,7 +12,7 @@ namespace Wetr.Server.DAL.DTO
         public int CommunityID { get; set; }
         public string DeviceName { get; set; }
         public string Address { get; set; }
-        public float Longitude { get; set; }
-        public float Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
     }
 }
