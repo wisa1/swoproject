@@ -50,9 +50,5 @@
     <Compile Include="UnitOfMeasure.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="inserts.sql" />
-    <Content Include="schema.sql" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
