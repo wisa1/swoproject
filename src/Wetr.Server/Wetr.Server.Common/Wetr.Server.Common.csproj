@@ -46,9 +46,17 @@
   <ItemGroup>
     <Compile Include="ADOTemplate.cs" />
     <Compile Include="ConnectionFactory.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="GroupedResultRecord.cs" />
     <Compile Include="IConnectionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlParameter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wetr.Server.DAL.DTO\Wetr.Server.DAL.DTO.csproj">
+      <Project>{1383906A-AE75-4553-8641-BD9847B3ABAB}</Project>
+      <Name>Wetr.Server.DAL.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

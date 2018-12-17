@@ -18,6 +18,7 @@ namespace Wetr.Server.Common
             this.connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
         }
 
+        //Select
         public async Task<IEnumerable<T>> QueryAsync<T>(string sql, RowMapper<T> mapper, SqlParameter[] parameters = null)
         {
             using (DbConnection connection = connectionFactory.CreateConnection())
@@ -40,6 +41,7 @@ namespace Wetr.Server.Common
             }
         }
 
+        //Insert / Delete
         public async Task<int> ExecuteAsync(string sql, SqlParameter[] parameters = null)
         {
             using (DbConnection connection = connectionFactory.CreateConnection())
@@ -54,6 +56,7 @@ namespace Wetr.Server.Common
             }
         }
 
+        //Aggregates.
         public async Task<decimal> ExecuteScalarAsync(string sql, SqlParameter[] parameters = null)
         {
             using (DbConnection connection = connectionFactory.CreateConnection())
@@ -67,6 +70,7 @@ namespace Wetr.Server.Common
             }
         }
 
+        #region private helper functions
         private void AddParameters(SqlParameter[] parameters, DbCommand command)
         {
             if (parameters == null)
@@ -82,6 +86,7 @@ namespace Wetr.Server.Common
                 command.Parameters.Add(dbParameter);
             }
         }
+        #endregion
 
     }
 }

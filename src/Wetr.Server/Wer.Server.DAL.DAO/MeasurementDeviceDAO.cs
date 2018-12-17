@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Wetr.Server.Common;
 using Wetr.Server.DAL.DTO;
 using Wetr.Server.DAL.IDAO;
 using static Wetr.Server.Common.ADOTemplate;
+using SqlParameter = Wetr.Server.Common.SqlParameter;
 
 namespace Wetr.Server.DAL.DAO
 {
@@ -31,6 +33,9 @@ namespace Wetr.Server.DAL.DAO
         {
             this.template = new ADOTemplate(connectionFactory);
         }
+
+
+
         public async Task<IEnumerable<MeasurementDevice>> FindAllAsync()
           => await template.QueryAsync<MeasurementDevice>("SELECT * FROM [Measurement Device]", measurementDeviceMapper);
 
@@ -48,6 +53,33 @@ namespace Wetr.Server.DAL.DAO
                                                          new SqlParameter("@Address", measurementDevice.Address),
                                                          new SqlParameter("@Longitude", measurementDevice.Longitude),
                                                          new SqlParameter("@Latitude", measurementDevice.Latitude)}));
+
+        public async Task<int> DeleteAsync(MeasurementDevice measurementDevice)
+        {
+            try { 
+                return await template.ExecuteAsync("DELETE FROM [Measurement Device] WHERE [ID] = @ID",
+                                            new SqlParameter[] { new SqlParameter("@ID", measurementDevice.ID) });
+            } catch(SqlException e)
+            {
+                //Return 0 in case we try to delete a nonexistend record, or one with foreign key references to it.
+                return 0;
+            }
+        }
+
+        public async Task<int> UpdateAsync(MeasurementDevice measurementDevice)
+           => (await template.ExecuteAsync("UPDATE [Measurement Device] SET " +
+                                           "[CommunityID] = @CommunityID," +
+                                           "[Device Name] = @DeviceName," +
+                                           " [Address] = @Address, " +
+                                           "[Longitude] = @Longitude, " +
+                                           "[Latitude] = @Latitude " +
+                                           "WHERE [ID] = @ID"
+                                           , new SqlParameter[] { new SqlParameter("@CommunityID", measurementDevice.CommunityID) ,
+                                                         new SqlParameter("@DeviceName", measurementDevice.DeviceName),
+                                                         new SqlParameter("@Address", measurementDevice.Address),
+                                                         new SqlParameter("@Longitude", measurementDevice.Longitude),
+                                                         new SqlParameter("@Latitude", measurementDevice.Latitude),
+                                                         new SqlParameter("@ID", measurementDevice.ID)}));
     }
 
 }

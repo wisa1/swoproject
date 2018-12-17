@@ -18,7 +18,6 @@ namespace Wetr.Server.TestApplication
         static void Main(string[] args)
         {
             MainAsync().Wait();
-           
         }
 
         private static async Task<int> MainAsync()
@@ -35,6 +34,35 @@ namespace Wetr.Server.TestApplication
 
             Console.WriteLine(user.FirstName);
 
+            IMeasurementDeviceDAO measurementDeviceDAO = new MeasurementDeviceDAO(connFac);
+            var md = await measurementDeviceDAO.FindByIDAsync(1);
+            Console.WriteLine(md.Address);
+
+            md.Address = "Röhrgraben 7";
+            await measurementDeviceDAO.UpdateAsync(md);
+
+            var md2 = await measurementDeviceDAO.FindByIDAsync(1);
+            Console.WriteLine(md2.Address);
+
+            int x = await measurementDeviceDAO.DeleteAsync(md2);
+            Console.WriteLine(x);
+
+            var md3 = await measurementDeviceDAO.FindByIDAsync(1);
+            Console.WriteLine(md.Address);
+
+            Console.ReadLine();
+
+
+
+            var measurementDao = new MeasurementDAO(connFac);
+            var measurementTypeDao = new MeasurementTypeDAO(connFac);
+
+            var device = await measurementDeviceDAO.FindByIDAsync(1);
+            var type = await measurementTypeDao.FindByIDAsync(1);
+
+
+
+            var recs = await measurementDao.GetAggregatedDataForDevice(device, Constants.AggregationType.Max, type, Constants.PeriodType.Month);
             return 0;
         }
     }

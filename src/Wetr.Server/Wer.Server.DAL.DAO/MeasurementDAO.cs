@@ -27,6 +27,8 @@ namespace Wetr.Server.DAL.DAO
             };
         };
 
+        
+
         public MeasurementDAO(IConnectionFactory connectionFactory)
         {
             this.template = new ADOTemplate(connectionFactory);
@@ -35,10 +37,65 @@ namespace Wetr.Server.DAL.DAO
          => await template.QueryAsync<Measurement>("SELECT * FROM [Measurement]", measurementMapper);
 
         public async Task<Measurement> FindByIDAsync(int id)
-         => (await template.QueryAsync<Measurement>("Select * FROM [Measurement] WHERE ID = @ID",
+         => (await template.QueryAsync<Measurement>("SELECT * FROM [Measurement] WHERE ID = @ID",
                                  measurementMapper,
                                  new SqlParameter[] { new SqlParameter("@ID", id) }
                                 )).SingleOrDefault();
+
+        public async Task<IEnumerable<GroupedResultRecord>> GetAggregatedDataForDevice(MeasurementDevice measurementDevice, Constants.AggregationType aggregationType, MeasurementType measurementType, Constants.PeriodType periodType)
+        {
+            string dateCalc = $"dateadd({periodType.ToSqlDatepart()}, datediff({periodType.ToSqlDatepart()}, 0, [Timestamp]), 0) ";
+            string sql = $"SELECT {aggregationType.ToSqlAggregate()}(Value) AS Value, " +
+                dateCalc + "as DateTimeStart " +
+                "FROM [Measurement] " +
+                "WHERE [Unit of Measure ID] = @measurementTypeID " +
+                "AND [DeviceID] = @DeviceID "+
+                $"GROUP BY " + dateCalc +";";          
+
+
+            var resultSet = await template.QueryAsync<GroupedResultRecord>(
+                sql,
+                GroupedResultRecord.groupResultMapper,
+                new SqlParameter[]{
+                    new SqlParameter("@measurementTypeID", measurementType.ID),
+                    new SqlParameter("@DeviceID", measurementDevice.ID)
+                });
+
+            foreach(GroupedResultRecord record in resultSet)
+            {
+                record.PeriodType = periodType;
+                record.MeasurementType = measurementType;
+            }
+            return resultSet;
+        }
+
+        public async Task<IEnumerable<GroupedResultRecord>> GetCumulatedDataForDevice(MeasurementDevice measurementDevice, Constants.AggregationType aggregationType, MeasurementType measurementType, Constants.PeriodType periodType)
+        {
+            string dateCalc = $"dateadd({periodType.ToSqlDatepart()}, datediff({periodType.ToSqlDatepart()}, 0, [Timestamp]), 0) ";
+            string sql = "SELECT DISTINCT " +
+                        dateCalc + "AS StartDateTime " +
+                        "SUM([Value]) over(partition by[DeviceID]" +
+                        "ORDER BY " + dateCalc + " AS Value" +
+                        "FROM [Measurement] " +
+                        "WHERE [DeviceID] = @DeviceID AND " +
+                        "[Unit of Measure ID] = @measurementTypeID";
+
+            var resultSet = await template.QueryAsync<GroupedResultRecord>(
+                sql,
+                GroupedResultRecord.groupResultMapper,
+                new SqlParameter[]
+                {
+                    new SqlParameter("@measurementTypeID", measurementType.ID),
+                    new SqlParameter("@DeviceID", measurementDevice.ID)
+                });
+
+            foreach (GroupedResultRecord record in resultSet)
+            {
+                record.PeriodType = periodType;
+                record.MeasurementType = measurementType;
+            }
+            return resultSet;
+        }
 
         public async Task<int> InsertAsync(Measurement measurement)
          => (await template.ExecuteAsync("INSERT INTO [Measurement] (TypeID, DeviceID, Value, [Unit of Measure ID], Timestamp) " +
@@ -48,5 +105,7 @@ namespace Wetr.Server.DAL.DAO
                                                 new SqlParameter("@Value", measurement.Value),
                                                 new SqlParameter("@UnitOfMeasureID", measurement.UnitOfMeasureID),
                                                 new SqlParameter("@Timestamp", measurement.Timestamp)}));
+
+        
     }
 }
