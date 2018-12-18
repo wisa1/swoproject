@@ -59,7 +59,7 @@ namespace Wetr.Server.DAL.DAO
             try { 
                 return await template.ExecuteAsync("DELETE FROM [Measurement Device] WHERE [ID] = @ID",
                                             new SqlParameter[] { new SqlParameter("@ID", measurementDevice.ID) });
-            } catch(SqlException e)
+            } catch (SqlException)
             {
                 //Return 0 in case we try to delete a nonexistend record, or one with foreign key references to it.
                 return 0;

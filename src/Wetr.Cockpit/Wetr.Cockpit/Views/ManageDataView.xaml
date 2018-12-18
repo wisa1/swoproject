@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Wetr.Cockpit.Views.ManageDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Wetr.Cockpit.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" Text="All Stations" Grid.Row="0"></TextBlock>
+            <ScrollViewer Grid.Row="1">
+                <ListBox ItemsSource="{Binding Devices}" DisplayMemberPath="DeviceName">
+                    
+                </ListBox>
+            </ScrollViewer>
+            <Button Grid.Row="3" Content="Add Station"></Button>
+        </Grid>
+    </Grid>
+</UserControl>

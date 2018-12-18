@@ -74,7 +74,7 @@ namespace Wetr.Server.DAL.DAO
             string dateCalc = $"dateadd({periodType.ToSqlDatepart()}, datediff({periodType.ToSqlDatepart()}, 0, [Timestamp]), 0) ";
             string sql = "SELECT DISTINCT " +
                         dateCalc + "AS StartDateTime " +
-                        "SUM([Value]) over(partition by[DeviceID]" +
+                        "SUM([Value]) over(partition by [DeviceID] " +
                         "ORDER BY " + dateCalc + " AS Value" +
                         "FROM [Measurement] " +
                         "WHERE [DeviceID] = @DeviceID AND " +

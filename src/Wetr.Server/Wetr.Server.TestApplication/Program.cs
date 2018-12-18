@@ -52,15 +52,11 @@ namespace Wetr.Server.TestApplication
 
             Console.ReadLine();
 
-
-
             var measurementDao = new MeasurementDAO(connFac);
             var measurementTypeDao = new MeasurementTypeDAO(connFac);
 
             var device = await measurementDeviceDAO.FindByIDAsync(1);
             var type = await measurementTypeDao.FindByIDAsync(1);
-
-
 
             var recs = await measurementDao.GetAggregatedDataForDevice(device, Constants.AggregationType.Max, type, Constants.PeriodType.Month);
             return 0;
