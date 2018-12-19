@@ -17,13 +17,11 @@
                 <RowDefinition Height="10*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" Text="All Stations" Grid.Row="0"></TextBlock>
-            <ScrollViewer Grid.Row="1">
-                <ListBox ItemsSource="{Binding Devices}" DisplayMemberPath="DeviceName">
-                    
-                </ListBox>
-            </ScrollViewer>
-            <Button Grid.Row="3" Content="Add Station"></Button>
+            
+            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" Text="All Stations" Grid.Column="0" Margin="8"></TextBlock>
+            <ListBox Grid.Row="1" ItemsSource="{Binding Devices}" DisplayMemberPath="DeviceName" SelectedItem="{Binding Current}" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+            <Button Grid.Row="3" Content="Add Station" Command="{Binding InsertCommand}"></Button>
         </Grid>
+        <local:MeasurementDeviceDetails Grid.Column="1" DataContext="{Binding Current}"></local:MeasurementDeviceDetails>
     </Grid>
 </UserControl>

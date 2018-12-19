@@ -10,5 +10,10 @@ namespace Wetr.Server.BL.IDefinition
     public interface IMasterdataManager
     {
         Task<IEnumerable<MeasurementDevice>> FindAllMeasurementDevicesAsync();
+        Task<int> DeleteMeasurementDeviceAsync(MeasurementDevice measurementDevice);
+        Task<int> UpdateMeasurementDeviceAsync(MeasurementDevice measurementDevice);
+        Task<MeasurementDevice> InsertMeasurementDeviceAsync(MeasurementDevice measurementDevice);
+
+        Task<Community> FindCommunityByIdAsync(int id);
     }
 }

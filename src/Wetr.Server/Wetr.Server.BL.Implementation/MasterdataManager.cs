@@ -10,12 +10,41 @@ namespace Wetr.Server.BL.Implementation
 {
     public class MasterdataManager : IMasterdataManager
     {
+        private IConnectionFactory connFac;
+        private IMeasurementDeviceDAO measurementDeviceDAO;
+        private ICommunityDAO communityDAO;
+
+        public MasterdataManager()
+        {
+            connFac = new ConnectionFactory("System.Data.SqlClient", "Integrated Security=true;Initial Catalog=WeatherTracer;server=tcp:(local);");
+            measurementDeviceDAO = new MeasurementDeviceDAO(connFac);
+            communityDAO = new CommunityDAO(connFac);
+        }
+
+        public async Task<int> DeleteMeasurementDeviceAsync(MeasurementDevice measurementDevice)
+        {
+            return await measurementDeviceDAO.DeleteAsync(measurementDevice);
+        }
         public async Task<IEnumerable<MeasurementDevice>> FindAllMeasurementDevicesAsync()
         {
-            IConnectionFactory connFac = new ConnectionFactory("System.Data.SqlClient", "Integrated Security=true;Initial Catalog=WeatherTracer;server=tcp:(local);");
-            
             IMeasurementDeviceDAO measurementDeviceDAO = new MeasurementDeviceDAO(connFac);
             return await measurementDeviceDAO.FindAllAsync();
+        }
+        public async Task<MeasurementDevice> InsertMeasurementDeviceAsync(MeasurementDevice measurementDevice)
+        {
+            await measurementDeviceDAO.InsertAsync(measurementDevice);
+            var id = await measurementDeviceDAO.GetLastIndex();
+            measurementDevice.ID = id;
+            return measurementDevice;
+        }
+        public async Task<int> UpdateMeasurementDeviceAsync(MeasurementDevice measurementDevice)
+        {
+            return await measurementDeviceDAO.UpdateAsync(measurementDevice);
+        }
+
+        public async Task<Community> FindCommunityByIdAsync(int id)
+        {
+            return await communityDAO.FindByIDAsync(id);
         }
     }
 }

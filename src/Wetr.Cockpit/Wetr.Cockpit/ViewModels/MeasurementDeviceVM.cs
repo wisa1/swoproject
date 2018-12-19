@@ -1,5 +1,9 @@
 ﻿
+using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Wetr.Cockpit.Helpers;
+using Wetr.Server.BL.IDefinition;
 using Wetr.Server.DAL.DTO;
 
 namespace Wetr.Cockpit.ViewModels
@@ -7,11 +11,16 @@ namespace Wetr.Cockpit.ViewModels
     public class MeasurementDeviceVM : ViewModelBase
     {
         private MeasurementDevice measurementDevice;
+        IMasterdataManager masterDataManager;
 
-        public MeasurementDeviceVM(MeasurementDevice measurementDevice)
+        public Community Community;
+        public MeasurementDeviceVM(MeasurementDevice measurementDevice, IMasterdataManager masterDataManager)
         {
             this.measurementDevice = measurementDevice ?? throw new System.ArgumentException("MeasurementDevice must not be null!");
+            this.masterDataManager = masterDataManager;
         }
+
+        public MeasurementDevice MeasurementDevice{ get { return this.measurementDevice; }}
 
         public int ID
         {
@@ -27,9 +36,10 @@ namespace Wetr.Cockpit.ViewModels
             }
             set
             {
-                if (this. measurementDevice.CommunityID != value)
+                if (this.measurementDevice.CommunityID != value)
                 {
                     this.measurementDevice.CommunityID = value;
+                    //this.Community = masterDataManager.FindCommunityByIdAsync(value).Result;
                     this.RaisePropertyChanged();
                 }
             }
@@ -64,7 +74,7 @@ namespace Wetr.Cockpit.ViewModels
                 }
             }
         }
-        public double Longitued
+        public double Longitude
         {
             get
             {

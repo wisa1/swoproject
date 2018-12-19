@@ -13,7 +13,7 @@ namespace Wetr.Cockpit
         {
             InitializeComponent();
 
-            this.DataContext = new MainWindowViewModel();
+            this.DataContext = new MainWindowVM();
         }
 
         private void ToggleBurger(object sender, MouseButtonEventArgs e)

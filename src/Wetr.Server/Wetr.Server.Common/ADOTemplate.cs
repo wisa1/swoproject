@@ -65,7 +65,7 @@ namespace Wetr.Server.Common
                 {
                     command.CommandText = sql;
                     AddParameters(parameters, command);
-                    return (decimal)(await command.ExecuteScalarAsync());
+                    return Convert.ToDecimal(await command.ExecuteScalarAsync());
                 }
             }
         }

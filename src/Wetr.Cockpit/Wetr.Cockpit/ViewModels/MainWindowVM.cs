@@ -11,11 +11,11 @@ namespace Wetr.Cockpit.ViewModels
      * Represents the Entry point to the application
      * This ViewModel basically only holds the user controls, that can be brought up using the burger menu
      */
-    public class MainWindowViewModel
+    public class MainWindowVM
     {
         public MainListItem[] ListItems { get; }
 
-        public MainWindowViewModel()
+        public MainWindowVM()
         {
             ListItems = new MainListItem[]
             {

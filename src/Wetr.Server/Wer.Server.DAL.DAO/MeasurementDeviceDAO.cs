@@ -46,13 +46,15 @@ namespace Wetr.Server.DAL.DAO
                                 )).SingleOrDefault();
 
         public async Task<int> InsertAsync(MeasurementDevice measurementDevice)
-          => (await template.ExecuteAsync("INSERT INTO [Measurement Device] (CommunityID, [Device Name], Address, Longitude, Latitude) " +
+          =>  (await template.ExecuteAsync("INSERT INTO [Measurement Device] (CommunityID, [Device Name], Address, Longitude, Latitude) " +
                                           "VALUES(@CommunityID, @DeviceName, @Address, @Longitude, @Latitude)",
                                     new SqlParameter[] { new SqlParameter("@CommunityID", measurementDevice.CommunityID) ,
                                                          new SqlParameter("@DeviceName", measurementDevice.DeviceName),
                                                          new SqlParameter("@Address", measurementDevice.Address),
                                                          new SqlParameter("@Longitude", measurementDevice.Longitude),
                                                          new SqlParameter("@Latitude", measurementDevice.Latitude)}));
+        
+          
 
         public async Task<int> DeleteAsync(MeasurementDevice measurementDevice)
         {
@@ -61,7 +63,7 @@ namespace Wetr.Server.DAL.DAO
                                             new SqlParameter[] { new SqlParameter("@ID", measurementDevice.ID) });
             } catch (SqlException)
             {
-                //Return 0 in case we try to delete a nonexistend record, or one with foreign key references to it.
+                //Return 0 in case we try to delete a nonexistent record, or one with foreign key references to it.
                 return 0;
             }
         }
@@ -80,6 +82,9 @@ namespace Wetr.Server.DAL.DAO
                                                          new SqlParameter("@Longitude", measurementDevice.Longitude),
                                                          new SqlParameter("@Latitude", measurementDevice.Latitude),
                                                          new SqlParameter("@ID", measurementDevice.ID)}));
+
+        public async Task<int> GetLastIndex()
+         => (int) (await template.ExecuteScalarAsync("SELECT MAX([ID]) FROM [Measurement Device]", null));
     }
 
 }

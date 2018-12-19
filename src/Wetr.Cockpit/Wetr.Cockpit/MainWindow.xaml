@@ -7,7 +7,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Wetr.Cockpit.ViewModels"
         mc:Ignorable="d"
-        Title="Wetr.Cockpit" Height="450" Width="800"
+        Title="Wetr.Cockpit" Height="600" Width="1024"
         
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -25,6 +25,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Teal.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -56,9 +58,7 @@
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Wetr.Cockpit</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
-                <ScrollViewer>
-                    <ContentControl Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.UserControl}" />
-                </ScrollViewer>
+                <ContentControl Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.UserControl}" />
             </DockPanel>
         </materialDesign:DrawerHost>
     </materialDesign:DialogHost>

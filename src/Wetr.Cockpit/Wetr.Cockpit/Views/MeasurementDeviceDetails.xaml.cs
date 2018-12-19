@@ -12,21 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Wetr.Cockpit.ViewModels;
-using Wetr.Server.BL.Implementation;
 
 namespace Wetr.Cockpit.Views
 {
     /// <summary>
-    /// Interaction logic for ManageDataView.xaml
+    /// Interaction logic for MeasurementDeviceDetails.xaml
     /// </summary>
-    public partial class ManageDataView : UserControl
+    public partial class MeasurementDeviceDetails : UserControl
     {
-        public ManageDataView()
+        public MeasurementDeviceDetails()
         {
             InitializeComponent();
-
-            DataContext = new ManageDataVM(new MasterdataManager());
         }
     }
 }

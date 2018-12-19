@@ -14,5 +14,6 @@ namespace Wetr.Server.DAL.IDAO
         Task<int> InsertAsync(MeasurementDevice measurementDevice);
         Task<int> DeleteAsync(MeasurementDevice measurementDevice);
         Task<int> UpdateAsync(MeasurementDevice measurementDevice);
+        Task<int> GetLastIndex();
     }
 }
