@@ -13,22 +13,24 @@ namespace Wetr.Server.BL.Implementation
         private IConnectionFactory connFac;
         private IMeasurementDeviceDAO measurementDeviceDAO;
         private ICommunityDAO communityDAO;
+        private IMeasurementTypeDAO measurementTypeDAO;
 
         public MasterdataManager()
         {
             connFac = new ConnectionFactory("System.Data.SqlClient", "Integrated Security=true;Initial Catalog=WeatherTracer;server=tcp:(local);");
             measurementDeviceDAO = new MeasurementDeviceDAO(connFac);
+            measurementTypeDAO = new MeasurementTypeDAO(connFac);
             communityDAO = new CommunityDAO(connFac);
         }
 
+        //MeasurementDevice
+        public async Task<IEnumerable<MeasurementDevice>> FindAllMeasurementDevicesAsync()
+        {
+            return await this.measurementDeviceDAO.FindAllAsync();
+        }
         public async Task<int> DeleteMeasurementDeviceAsync(MeasurementDevice measurementDevice)
         {
             return await measurementDeviceDAO.DeleteAsync(measurementDevice);
-        }
-        public async Task<IEnumerable<MeasurementDevice>> FindAllMeasurementDevicesAsync()
-        {
-            IMeasurementDeviceDAO measurementDeviceDAO = new MeasurementDeviceDAO(connFac);
-            return await measurementDeviceDAO.FindAllAsync();
         }
         public async Task<MeasurementDevice> InsertMeasurementDeviceAsync(MeasurementDevice measurementDevice)
         {
@@ -42,9 +44,20 @@ namespace Wetr.Server.BL.Implementation
             return await measurementDeviceDAO.UpdateAsync(measurementDevice);
         }
 
+        //Community
         public async Task<Community> FindCommunityByIdAsync(int id)
         {
             return await communityDAO.FindByIDAsync(id);
+        }
+        public async Task<IEnumerable<Community>> FindAllCommunitiesAsync()
+        {
+            return await this.communityDAO.FindAllAsync();
+        }
+
+        //MeasurementType
+        public async Task<IEnumerable<MeasurementType>> FindAllMeasurmentTypesAsync()
+        {
+            return await this.measurementTypeDAO.FindAllAsync();
         }
     }
 }

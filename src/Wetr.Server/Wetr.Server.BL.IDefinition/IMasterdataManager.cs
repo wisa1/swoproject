@@ -15,5 +15,8 @@ namespace Wetr.Server.BL.IDefinition
         Task<MeasurementDevice> InsertMeasurementDeviceAsync(MeasurementDevice measurementDevice);
 
         Task<Community> FindCommunityByIdAsync(int id);
+        Task<IEnumerable<Community>> FindAllCommunitiesAsync();
+
+        Task<IEnumerable<MeasurementType>> FindAllMeasurmentTypesAsync();
     }
 }

@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Wetr.Cockpit.Helpers;
@@ -11,16 +12,40 @@ namespace Wetr.Cockpit.ViewModels
     public class MeasurementDeviceVM : ViewModelBase
     {
         private MeasurementDevice measurementDevice;
-        IMasterdataManager masterDataManager;
+        private IMasterdataManager masterDataManager;
+        private ManageDataVM parentVM;
+        private CommunityVM community;
 
-        public Community Community;
-        public MeasurementDeviceVM(MeasurementDevice measurementDevice, IMasterdataManager masterDataManager)
+        public MeasurementDevice MeasurementDevice { get { return this.measurementDevice; } }
+        public CommunityVM Community
+        {
+            set
+            {
+                if (value != null)
+                {
+                    this.CommunityID = value.ID;
+                    this.community = value;
+                }
+            }
+            get { return community; }
+        }
+        public ManageDataVM ParentVM
+        {
+            get { return this.parentVM; }
+        }
+
+        public MeasurementDeviceVM(MeasurementDevice measurementDevice, IMasterdataManager masterDataManager, ManageDataVM parentVM)
+        {
+            this.measurementDevice = measurementDevice ?? throw new System.ArgumentException("MeasurementDevice must not be null!");
+            this.masterDataManager = masterDataManager;
+            this.parentVM = parentVM;
+            this.Community = parentVM.Communities.Where<CommunityVM>(vm => vm.ID == this.CommunityID).FirstOrDefault();
+        }
+        public MeasurementDeviceVM(MeasurementDevice measurementDevice, IMasterdataManager masterDataManager, QueryDataVM parentVM)
         {
             this.measurementDevice = measurementDevice ?? throw new System.ArgumentException("MeasurementDevice must not be null!");
             this.masterDataManager = masterDataManager;
         }
-
-        public MeasurementDevice MeasurementDevice{ get { return this.measurementDevice; }}
 
         public int ID
         {
@@ -39,7 +64,8 @@ namespace Wetr.Cockpit.ViewModels
                 if (this.measurementDevice.CommunityID != value)
                 {
                     this.measurementDevice.CommunityID = value;
-                    //this.Community = masterDataManager.FindCommunityByIdAsync(value).Result;
+                    if(this.parentVM != null)
+                        this.Community = parentVM.Communities.Where<CommunityVM>(vm => vm.ID == this.CommunityID).FirstOrDefault();
                     this.RaisePropertyChanged();
                 }
             }

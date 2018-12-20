@@ -44,7 +44,17 @@
                         <Binding Path="DeviceName" UpdateSourceTrigger="PropertyChanged"></Binding>
                     </TextBox.Text>
                 </TextBox>
-
+                
+                
+                <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="City" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
+                <ComboBox materialDesign:HintAssist.Hint="City"
+                          Grid.Row="1" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                          ItemsSource="{Binding Path=ParentVM.Communities}"
+                          SelectedItem="{Binding Path=Community, Mode=TwoWay}"
+                          DisplayMemberPath="Name"
+                ></ComboBox>
+                
+                <!--
                 <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="City" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
                 <TextBox x:Name="CommunityTextBox" Grid.Row="1" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                     <materialDesign:HintAssist.Hint>
@@ -53,10 +63,11 @@
                         </StackPanel>
                     </materialDesign:HintAssist.Hint>
                     <TextBox.Text>
-                        <Binding Path="CommunityID" UpdateSourceTrigger="PropertyChanged"></Binding>
+                        <Binding Path="Community.Name" UpdateSourceTrigger="PropertyChanged"></Binding>
                     </TextBox.Text>
                 </TextBox>
-
+                -->
+                
                 <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="AddressMarker" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
                 <TextBox x:Name="AddressTextBox" Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                     <materialDesign:HintAssist.Hint>
@@ -77,7 +88,7 @@
                         </StackPanel>
                     </materialDesign:HintAssist.Hint>
                     <TextBox.Text>
-                        <Binding Path="Longitude" UpdateSourceTrigger="PropertyChanged"></Binding>
+                        <Binding Path="Longitude" UpdateSourceTrigger="PropertyChanged" StringFormat="N7"></Binding>
                     </TextBox.Text>
                 </TextBox>
 
@@ -89,7 +100,7 @@
                         </StackPanel>
                     </materialDesign:HintAssist.Hint>
                     <TextBox.Text>
-                        <Binding Path="Latitude" UpdateSourceTrigger="PropertyChanged"></Binding>
+                        <Binding Path="Latitude" UpdateSourceTrigger="PropertyChanged" StringFormat="N7"></Binding>
                     </TextBox.Text>
                 </TextBox>
 
@@ -99,13 +110,13 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Button Content="Save Changes" Grid.Column="0" Margin="5" 
-                            Command="{Binding DataContext. SaveCommand, 
+                            Command="{Binding DataContext.SaveCommand, 
                                       RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:ManageDataView}}"
                             CommandParameter="{Binding}">
                     </Button>
 
                     <Button Content="Delete Device" Grid.Column="1" Margin="5" 
-                            Command="{Binding DataContext. DeleteCommand, 
+                            Command="{Binding DataContext.DeleteCommand, 
                                       RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:ManageDataView}}"
                             CommandParameter="{Binding}">
                     </Button>

@@ -4,9 +4,63 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Wetr.Cockpit.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBox>Hallo, ich bin die QueryDataView</TextBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="12*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="12*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" Text="Filter Data" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Center"></TextBlock>
+
+            <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="ImportantDevices" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
+            <ComboBox materialDesign:HintAssist.Hint="Device"
+                          Grid.Row="1" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                          ItemsSource="{Binding Path=Devices}"
+                          SelectedItem="{Binding Path=SelectedDevice, Mode=TwoWay}"
+                          DisplayMemberPath="DeviceName"
+            ></ComboBox>
+
+            <materialDesign:PackIcon Grid.Row="1" Grid.Column="3" Kind="ImportantDevices" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
+            <ComboBox materialDesign:HintAssist.Hint="Period Type"
+                          Grid.Row="1" Grid.Column="4" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                          ItemsSource="{Binding Path=PeriodTypeValues}"
+                          SelectedItem="{Binding Path=SelectedPeriodType, Mode=TwoWay}"
+            ></ComboBox>
+
+            <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="ImportantDevices" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
+            <ComboBox materialDesign:HintAssist.Hint="Aggregation Type"
+                          Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                          ItemsSource="{Binding Path=AggregationTypeValues}"
+                          SelectedItem="{Binding Path=SelectedAggregationType, Mode=TwoWay}"
+            ></ComboBox>
+
+            <materialDesign:PackIcon Grid.Row="2" Grid.Column="3" Kind="ImportantDevices" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
+            <ComboBox materialDesign:HintAssist.Hint="Measurement Type"
+                          Grid.Row="2" Grid.Column="4" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                          ItemsSource="{Binding Path=MeasurementTypes}"
+                          DisplayMemberPath="Description"
+                          SelectedItem="{Binding Path=SelectedMeasurementType, Mode=TwoWay}"
+            ></ComboBox>
+
+            <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Content="Query..." Margin="10" Command="{Binding QueryCommand}"></Button>
+        </Grid>
     </Grid>
 </UserControl>
