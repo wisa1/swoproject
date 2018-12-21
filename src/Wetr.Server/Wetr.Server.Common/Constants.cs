@@ -8,8 +8,8 @@ namespace Wetr.Server.Common
 {
     public static class Constants
     {
-        public enum PeriodType { Hour, Day, Week, Month, Year }
-        public enum AggregationType { Sum, Max, Min, Avg }
+        public enum PeriodType { None, /*Hour,*/ Day, Week, Month, Year }
+        public enum AggregationType { None, Sum, Max, Min, Avg }
     }
 
     public static class PeriodTypeExtension
@@ -18,7 +18,8 @@ namespace Wetr.Server.Common
         {
             switch (me)
             {
-                case Constants.PeriodType.Hour:  return "hh";
+                case Constants.PeriodType.None:  return "";
+                /*case Constants.PeriodType.Hour:  return "hh";*/
                 case Constants.PeriodType.Day :  return "d";
                 case Constants.PeriodType.Month: return "m";
                 case Constants.PeriodType.Week:  return "wk";
@@ -34,6 +35,7 @@ namespace Wetr.Server.Common
         {
             switch (me)
             {
+                case Constants.AggregationType.None:return "";
                 case Constants.AggregationType.Avg: return "AVG";
                 case Constants.AggregationType.Max: return "MAX";
                 case Constants.AggregationType.Min: return "MIN";

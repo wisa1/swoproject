@@ -11,7 +11,7 @@ namespace Wetr.Server.DAL.IDAO
         Task<IEnumerable<Measurement>> FindAllAsync();
         Task<Measurement> FindByIDAsync(int id);
         Task<int> InsertAsync(Measurement measurement);
-        Task<IEnumerable<GroupedResultRecord>> GetAggregatedDataForDevice(MeasurementDevice measurementDevice, AggregationType aggregationType, MeasurementType measurementType, PeriodType periodType);
+        Task<IEnumerable<GroupedResultRecord>> GetAggregatedDataForDevice(MeasurementFilter filter);
         Task<IEnumerable<GroupedResultRecord>> GetCumulatedDataForDevice(MeasurementDevice measurementDevice, AggregationType aggregationType, MeasurementType measurementType, PeriodType periodType);
 
         //region stuff?

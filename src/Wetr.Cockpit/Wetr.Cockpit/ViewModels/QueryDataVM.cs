@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Input;
 using Wetr.Cockpit.Helpers;
 using Wetr.Server.BL.IDefinition;
+using Wetr.Server.Common;
 using Wetr.Server.DAL.DTO;
 using static Wetr.Server.Common.Constants;
 
@@ -17,10 +18,13 @@ namespace Wetr.Cockpit.ViewModels
 
         private ObservableCollection<MeasurementDeviceVM> devices;
         private ObservableCollection<MeasurementTypeVM> measurementTypes;
+
         private MeasurementDeviceVM selectedDevice;
         private PeriodType selectedPeriodType;
         private AggregationType selectedAggregationType;
         private MeasurementTypeVM selectedMeasurementType;
+        public DateTime dateTimeFrom { set; get; }
+        public DateTime dateTimeTo { set; get; }
 
         public ObservableCollection<MeasurementDeviceVM> Devices
         {
@@ -52,6 +56,7 @@ namespace Wetr.Cockpit.ViewModels
                 return this.measurementTypes;
             }
         }
+
         public MeasurementDeviceVM SelectedDevice
         {
             set
@@ -103,6 +108,38 @@ namespace Wetr.Cockpit.ViewModels
                 return selectedMeasurementType;
             }
         }
+        public DateTime DateTimeFrom
+        {
+            set
+            {
+                if(this.dateTimeFrom == null || this.dateTimeFrom != value)
+                {
+                    this.dateTimeFrom = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+            get
+            {
+                return this.dateTimeFrom;  
+            }
+        }
+        public DateTime DateTimeTo
+        {
+            set
+            {
+                if (this.dateTimeTo == null || this.dateTimeTo != value)
+                {
+                    this.dateTimeTo = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+            get
+            {
+                return this.dateTimeTo;
+            }
+        }
+
+
 
         public IEnumerable<PeriodType> PeriodTypeValues
         {
@@ -119,7 +156,7 @@ namespace Wetr.Cockpit.ViewModels
             }
         }
 
-        public ICommand QueryCommand;
+        public ICommand QueryCommand{ get; set; }
 
         public QueryDataVM(IMasterdataManager masterDataManager, IMeasurementManager measurementManager)
         {
@@ -127,13 +164,24 @@ namespace Wetr.Cockpit.ViewModels
             this.measurementManager = measurementManager;
 
             this.QueryCommand = new RelayCommand(PerformQuery);
-
+            this.dateTimeFrom = DateTime.Today.AddDays(-7);
+            this.dateTimeTo = DateTime.Today;
             LoadData();
         }
 
-        private void PerformQuery(object obj)
+        private async void PerformQuery(object obj)
         {
-            throw new NotImplementedException();
+            MeasurementFilter mf = new MeasurementFilter()
+            {
+                AggregationType = this.SelectedAggregationType,
+                PeriodType = this.SelectedPeriodType,
+                MeasurementDevice = this.SelectedDevice?.MeasurementDevice,
+                MeasurementType = this.selectedMeasurementType?.MeasurementType,
+                DateFrom = this.DateTimeFrom,
+                DateTo = this.DateTimeTo
+            };
+
+            var result = await this.measurementManager.PerformQueryAsync(mf);
         }
 
         private async void LoadData()

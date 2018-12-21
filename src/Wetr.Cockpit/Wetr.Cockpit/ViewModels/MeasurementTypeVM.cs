@@ -8,6 +8,7 @@ namespace Wetr.Cockpit.ViewModels
         private MeasurementType measurementType;
         private IMasterdataManager masterDataManager;
 
+        public MeasurementType MeasurementType { get { return this.measurementType; } }
         public MeasurementTypeVM(MeasurementType measurementType, IMasterdataManager masterDataManager)
         {
             this.measurementType = measurementType;

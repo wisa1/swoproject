@@ -46,6 +46,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Wetr.Server.Common\Wetr.Server.Common.csproj">
+      <Project>{69A5EE7A-F516-444E-B11F-61360D57F39F}</Project>
+      <Name>Wetr.Server.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wetr.Server.DAL.DTO\Wetr.Server.DAL.DTO.csproj">
       <Project>{1383906A-AE75-4553-8641-BD9847B3ABAB}</Project>
       <Name>Wetr.Server.DAL.DTO</Name>

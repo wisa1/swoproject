@@ -42,29 +42,32 @@ namespace Wetr.Server.DAL.DAO
                                  new SqlParameter[] { new SqlParameter("@ID", id) }
                                 )).SingleOrDefault();
 
-        public async Task<IEnumerable<GroupedResultRecord>> GetAggregatedDataForDevice(MeasurementDevice measurementDevice, Constants.AggregationType aggregationType, MeasurementType measurementType, Constants.PeriodType periodType)
+        public async Task<IEnumerable<GroupedResultRecord>> GetAggregatedDataForDevice(MeasurementFilter filter)
         {
-            string dateCalc = $"dateadd({periodType.ToSqlDatepart()}, datediff({periodType.ToSqlDatepart()}, 0, [Timestamp]), 0) ";
-            string sql = $"SELECT {aggregationType.ToSqlAggregate()}(Value) AS Value, " +
+            string dateCalc = $"dateadd({filter.PeriodType.ToSqlDatepart()}, datediff({filter.PeriodType.ToSqlDatepart()}, 0, [Timestamp]), 0) ";
+            string sql = $"SELECT {filter.AggregationType.ToSqlAggregate()}(Value) AS Value, " +
                 dateCalc + "as DateTimeStart " +
                 "FROM [Measurement] " +
                 "WHERE [Unit of Measure ID] = @measurementTypeID " +
+                "AND [Timestamp] BETWEEN @DateTimeStart AND @DateTimeEnd " +
                 "AND [DeviceID] = @DeviceID "+
-                $"GROUP BY " + dateCalc +";";          
-
+                $"GROUP BY " + dateCalc +";";
 
             var resultSet = await template.QueryAsync<GroupedResultRecord>(
                 sql,
                 GroupedResultRecord.groupResultMapper,
                 new SqlParameter[]{
-                    new SqlParameter("@measurementTypeID", measurementType.ID),
-                    new SqlParameter("@DeviceID", measurementDevice.ID)
-                });
+                    new SqlParameter("@measurementTypeID", filter.MeasurementType.ID),
+                    new SqlParameter("@DeviceID", filter.MeasurementDevice.ID),
+                    new SqlParameter("@DateTimeStart", filter.DateFrom),
+                    new SqlParameter("@DateTimeEnd", filter.DateTo)
+                }
+            );
 
             foreach(GroupedResultRecord record in resultSet)
             {
-                record.PeriodType = periodType;
-                record.MeasurementType = measurementType;
+                record.PeriodType = filter.PeriodType;
+                record.MeasurementType = filter.MeasurementType;
             }
             return resultSet;
         }
