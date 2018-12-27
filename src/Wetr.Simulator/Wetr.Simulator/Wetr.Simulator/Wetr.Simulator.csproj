@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0BDDB123-874D-43A7-841C-B191749D2FFB}</ProjectGuid>
+    <ProjectGuid>{0F2E2A04-4A1F-4D0F-89E0-15FC73617EBF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Wetr.Cockpit</RootNamespace>
-    <AssemblyName>Wetr.Cockpit</AssemblyName>
+    <RootNamespace>Wetr.Simulator</RootNamespace>
+    <AssemblyName>Wetr.Simulator</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
-    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -57,17 +53,13 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Wetr.Server.BL.IDefinition">
-      <HintPath>..\..\Wetr.Server\Wetr.Server.BL.IDefinition\bin\Debug\Wetr.Server.BL.IDefinition.dll</HintPath>
+      <HintPath>..\..\..\Wetr.Server\Wetr.Server.BL.IDefinition\bin\Debug\Wetr.Server.BL.IDefinition.dll</HintPath>
     </Reference>
-    <Reference Include="Wetr.Server.BL.Implementation">
-      <HintPath>..\..\Wetr.Server\Wetr.Server.BL.Implementation\bin\Debug\Wetr.Server.BL.Implementation.dll</HintPath>
-    </Reference>
-    <Reference Include="Wetr.Server.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Wetr.Server\Wetr.Server.Common\bin\Debug\Wetr.Server.Common.dll</HintPath>
+    <Reference Include="Wetr.Server.Common">
+      <HintPath>..\..\..\Wetr.Server\Wetr.Server.Common\bin\Debug\Wetr.Server.Common.dll</HintPath>
     </Reference>
     <Reference Include="Wetr.Server.DTO">
-      <HintPath>..\..\Wetr.Server\Wetr.Server.DAL.DTO\bin\Debug\Wetr.Server.DTO.dll</HintPath>
+      <HintPath>..\..\..\Wetr.Server\Wetr.Server.DAL.DTO\bin\Debug\Wetr.Server.DTO.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -78,50 +70,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helpers\NotifyPropertyChangedExtension.cs" />
-    <Compile Include="Helpers\RelayCommand.cs" />
-    <Compile Include="ViewModels\CommunityVM.cs" />
-    <Compile Include="ViewModels\GroupedResultRecordVM.cs" />
-    <Compile Include="ViewModels\MainListItem.cs" />
-    <Compile Include="ViewModels\MainWindowVM.cs" />
-    <Compile Include="ViewModels\ManageDataVM.cs" />
-    <Compile Include="ViewModels\MeasurementDeviceVM.cs" />
-    <Compile Include="ViewModels\MeasurementTypeVM.cs" />
-    <Compile Include="ViewModels\QueryDataVM.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\ManageDataView.xaml.cs">
-      <DependentUpon>ManageDataView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MeasurementDeviceDetails.xaml.cs">
-      <DependentUpon>MeasurementDeviceDetails.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\QueryDataView.xaml.cs">
-      <DependentUpon>QueryDataView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="DataProvider\MockRestClient.cs" />
+    <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="DataProvider\IRestClient.cs" />
+    <Compile Include="ViewModels\MeasurementDeviceVM.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ConfiguratorVM.cs" />
+    <Compile Include="ViewModels\MeasurementTypeVM.cs" />
+    <Compile Include="Views\ConfigurationWindow.xaml.cs">
+      <DependentUpon>ConfigurationWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\ManageDataView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MeasurementDeviceDetails.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\QueryDataView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -150,13 +112,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Views\ConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\ShowMeTheXAML.MSBuild.1.0.12\build\net45\ShowMeTheXAML.MSBuild.targets" Condition="Exists('..\packages\ShowMeTheXAML.MSBuild.1.0.12\build\net45\ShowMeTheXAML.MSBuild.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\ShowMeTheXAML.MSBuild.1.0.12\build\net45\ShowMeTheXAML.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ShowMeTheXAML.MSBuild.1.0.12\build\net45\ShowMeTheXAML.MSBuild.targets'))" />
-  </Target>
 </Project>

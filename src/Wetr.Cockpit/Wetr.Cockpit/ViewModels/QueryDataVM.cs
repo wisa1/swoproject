@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using Wetr.Cockpit.Helpers;
@@ -11,18 +12,20 @@ using static Wetr.Server.Common.Constants;
 
 namespace Wetr.Cockpit.ViewModels
 {
-    public class QueryDataVM : ViewModelBase
+    public class QueryDataVM : ViewModelBase, IDataErrorInfo
     {
         private IMasterdataManager masterDataManager;
         private IMeasurementManager measurementManager;
 
         private ObservableCollection<MeasurementDeviceVM> devices;
         private ObservableCollection<MeasurementTypeVM> measurementTypes;
+        private ObservableCollection<GroupedResultRecordVM> queryResultRecords;
 
         private MeasurementDeviceVM selectedDevice;
         private PeriodType selectedPeriodType;
         private AggregationType selectedAggregationType;
         private MeasurementTypeVM selectedMeasurementType;
+
         public DateTime dateTimeFrom { set; get; }
         public DateTime dateTimeTo { set; get; }
 
@@ -56,6 +59,21 @@ namespace Wetr.Cockpit.ViewModels
                 return this.measurementTypes;
             }
         }
+        public ObservableCollection<GroupedResultRecordVM> QueryResultRecords
+        {
+            set
+            {
+                if (this.queryResultRecords != null || !this.queryResultRecords.Equals(value))
+                {
+                    this.queryResultRecords = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+            get
+            {
+                return this.queryResultRecords;
+            }
+        }
 
         public MeasurementDeviceVM SelectedDevice
         {
@@ -78,6 +96,7 @@ namespace Wetr.Cockpit.ViewModels
             {
                 selectedPeriodType = value;
                 this.RaisePropertyChanged();
+                this.RaisePropertyChanged("SelectedAggregationType");
             }
             get
             {
@@ -90,6 +109,7 @@ namespace Wetr.Cockpit.ViewModels
             {
                 selectedAggregationType = value;
                 this.RaisePropertyChanged();
+                this.RaisePropertyChanged("SelectedPeriodType");
             }
             get
             {
@@ -139,8 +159,6 @@ namespace Wetr.Cockpit.ViewModels
             }
         }
 
-
-
         public IEnumerable<PeriodType> PeriodTypeValues
         {
             get
@@ -155,20 +173,48 @@ namespace Wetr.Cockpit.ViewModels
                 return Enum.GetValues(typeof(AggregationType)).Cast<AggregationType>();
             }
         }
-
         public ICommand QueryCommand{ get; set; }
+
+        public string Error => throw new NotImplementedException();
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if(columnName == "SelectedPeriodType")
+                {
+                    if(this.SelectedAggregationType == AggregationType.None && this.SelectedPeriodType != PeriodType.None)
+                    {
+                        return "Invalid Aggregation/Period Settings";
+                    }
+                }
+
+                if (columnName == "SelectedAggregationType")
+                {
+                    if (this.SelectedAggregationType == AggregationType.None && this.SelectedPeriodType != PeriodType.None)
+                    {
+                        return "Invalid Aggregation/Period Settings";
+                    }
+                }
+                return string.Empty;
+            }
+        }
+
 
         public QueryDataVM(IMasterdataManager masterDataManager, IMeasurementManager measurementManager)
         {
+            
             this.masterDataManager = masterDataManager;
             this.measurementManager = measurementManager;
+
+            LoadData();
 
             this.QueryCommand = new RelayCommand(PerformQuery);
             this.dateTimeFrom = DateTime.Today.AddDays(-7);
             this.dateTimeTo = DateTime.Today;
-            LoadData();
-        }
 
+            
+        }
         private async void PerformQuery(object obj)
         {
             MeasurementFilter mf = new MeasurementFilter()
@@ -181,9 +227,24 @@ namespace Wetr.Cockpit.ViewModels
                 DateTo = this.DateTimeTo
             };
 
-            var result = await this.measurementManager.PerformQueryAsync(mf);
-        }
+            if(mf.PeriodType != PeriodType.None && mf.AggregationType == AggregationType.None)
+            {
+                return;
+            }
 
+            this.QueryResultRecords?.Clear();
+            this.queryResultRecords = new ObservableCollection<GroupedResultRecordVM>();
+            foreach (GroupedResultRecord record in await this.measurementManager.PerformQueryAsync(mf))
+            {
+                var res = new GroupedResultRecordVM(record);
+                res.MeasurementDevice = Devices.Where<MeasurementDeviceVM>(vm => vm.ID == res.DeviceID)?.FirstOrDefault();
+
+                res.MeasurementType = MeasurementTypes.Where<MeasurementTypeVM>(vm => vm.ID == res.MeasurementTypeID)?.FirstOrDefault();
+                QueryResultRecords.Add(res);
+            }
+            this.RaisePropertyChanged("QueryResultRecords");
+            
+        }
         private async void LoadData()
         {
             this.devices?.Clear();
@@ -192,13 +253,15 @@ namespace Wetr.Cockpit.ViewModels
             {
                 this.devices.Add(new MeasurementDeviceVM(device, masterDataManager, this));
             }
+            this.RaisePropertyChanged("Devices");
 
             this.measurementTypes?.Clear();
             this.measurementTypes = new ObservableCollection<MeasurementTypeVM>();
             foreach(MeasurementType type in await masterDataManager.FindAllMeasurmentTypesAsync())
             {
-                this.measurementTypes.Add(new MeasurementTypeVM(type, masterDataManager));
+                this.measurementTypes.Add(new MeasurementTypeVM(type /*, masterDataManager*/));
             }
+            this.RaisePropertyChanged("MeasurementTypes");
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Wetr.Cockpit.ViewModels
+namespace Wetr.Simulator.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

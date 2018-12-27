@@ -10,7 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -46,22 +46,23 @@
                           Name="cmbPeriodType"
                           Grid.Row="1" Grid.Column="4" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                           ItemsSource="{Binding Path=PeriodTypeValues}"
-                          SelectedItem="{Binding Path=SelectedPeriodType, Mode=TwoWay}"
+                          SelectedItem="{Binding Path=SelectedPeriodType, Mode=TwoWay, ValidatesOnDataErrors=True}"
             ></ComboBox>
 
             <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="Summation" Foreground="{Binding ElementName=cmbAggregationType, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
             <ComboBox materialDesign:HintAssist.Hint="Aggregation Type"
                           Name="cmbAggregationType"
                           Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                          ItemsSource="{Binding Path=AggregationTypeValues}"
-                          SelectedItem="{Binding Path=SelectedAggregationType, Mode=TwoWay}"
-            ></ComboBox>
+                          ItemsSource="{Binding Path=AggregationTypeValues, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding Path=SelectedAggregationType, Mode=TwoWay, ValidatesOnDataErrors=True}"
+            >
+            </ComboBox>
 
             <materialDesign:PackIcon Grid.Row="2" Grid.Column="3" Kind="MeasuringTape" Foreground="{Binding ElementName=cmbMeasurementType, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
             <ComboBox materialDesign:HintAssist.Hint="Measurement Type"
                           Name="cmbMeasurementType"
                           Grid.Row="2" Grid.Column="4" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                          ItemsSource="{Binding Path=MeasurementTypes}"
+                          ItemsSource="{Binding Path=MeasurementTypes, ValidatesOnDataErrors=True}"
                           DisplayMemberPath="Description"
                           SelectedItem="{Binding Path=SelectedMeasurementType, Mode=TwoWay}"
             ></ComboBox>
@@ -85,6 +86,17 @@
                     Name="btnQuery"
             ></Button>
         </Grid>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding QueryResultRecords}"
+                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                  CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding DateTimeStart}" Header="Date"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding PeriodType}" Header="Period Type"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Value}" Header="Value"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding MeasurementDevice.DeviceName}" Header="DeviceName"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding MeasurementType.Description}" Header="MeasurementType"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
 

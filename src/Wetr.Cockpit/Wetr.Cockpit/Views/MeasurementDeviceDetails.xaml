@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
              xmlns:local="clr-namespace:Wetr.Cockpit.Views"
              xmlns:viewmodels="clr-namespace:Wetr.Cockpit.ViewModels"
              mc:Ignorable="d" 
@@ -53,20 +52,6 @@
                           SelectedItem="{Binding Path=Community, Mode=TwoWay}"
                           DisplayMemberPath="Name"
                 ></ComboBox>
-                
-                <!--
-                <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="City" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
-                <TextBox x:Name="CommunityTextBox" Grid.Row="1" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                    <materialDesign:HintAssist.Hint>
-                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
-                            <TextBlock>Community</TextBlock>
-                        </StackPanel>
-                    </materialDesign:HintAssist.Hint>
-                    <TextBox.Text>
-                        <Binding Path="Community.Name" UpdateSourceTrigger="PropertyChanged"></Binding>
-                    </TextBox.Text>
-                </TextBox>
-                -->
                 
                 <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="AddressMarker" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
                 <TextBox x:Name="AddressTextBox" Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}">

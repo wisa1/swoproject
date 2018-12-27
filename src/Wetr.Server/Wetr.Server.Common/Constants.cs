@@ -10,6 +10,7 @@ namespace Wetr.Server.Common
     {
         public enum PeriodType { None, /*Hour,*/ Day, Week, Month, Year }
         public enum AggregationType { None, Sum, Max, Min, Avg }
+        public enum DistributionStrategy { Linear, Todo1 , Todo2 , Todo3}
     }
 
     public static class PeriodTypeExtension

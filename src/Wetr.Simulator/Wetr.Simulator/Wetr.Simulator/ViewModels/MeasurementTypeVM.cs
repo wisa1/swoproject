@@ -1,18 +1,15 @@
-﻿using Wetr.Server.BL.IDefinition;
+﻿using Wetr.Simulator.ViewModels;
 using Wetr.Server.DAL.DTO;
 
-namespace Wetr.Cockpit.ViewModels
+namespace Wetr.Simulator.ViewModels
 {
     public class MeasurementTypeVM : ViewModelBase
     {
         private MeasurementType measurementType;
-        //private IMasterdataManager masterDataManager;
-
         public MeasurementType MeasurementType { get { return this.measurementType; } }
-        public MeasurementTypeVM(MeasurementType measurementType /*,IMasterdataManager masterDataManager*/)
+        public MeasurementTypeVM(MeasurementType measurementType)
         {
             this.measurementType = measurementType;
-            //this.masterDataManager = masterDataManager;
         }
 
         public int ID

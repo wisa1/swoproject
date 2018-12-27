@@ -32,7 +32,7 @@
     </Window.Resources>
     
     <materialDesign:DialogHost Identifier="RootDialog">
-        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" BottomDrawerBackground="White" Foreground="#DD000000">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="150">
                     <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
