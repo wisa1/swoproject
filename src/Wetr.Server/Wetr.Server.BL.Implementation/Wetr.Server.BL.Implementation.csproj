@@ -43,7 +43,6 @@
     <Compile Include="MasterdataManager.cs" />
     <Compile Include="MeasurementManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wer.Server.DAL.DAO\Wetr.Server.DAL.DAO.csproj">

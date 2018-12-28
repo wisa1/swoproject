@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="IMasterdataManager.cs" />
     <Compile Include="IMeasurementManager.cs" />
-    <Compile Include="IQueryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

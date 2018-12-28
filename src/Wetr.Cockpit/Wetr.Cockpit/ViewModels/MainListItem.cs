@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using Wetr.Cockpit.Helpers;
 
 namespace Wetr.Cockpit.ViewModels
 {

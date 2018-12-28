@@ -188,6 +188,8 @@ namespace Wetr.Simulator.ViewModels
             }
             get
             {
+                if (this._simulationSpeed < 1)
+                    this._simulationSpeed = 1;
                 return this._simulationSpeed;
             }
         }
@@ -236,7 +238,7 @@ namespace Wetr.Simulator.ViewModels
             }
             set
             {
-                if(this._selectedMeasurementType != value || this._selectedMeasurementType == null)
+                if(this._selectedMeasurementType != value)
                 {
                     this._selectedMeasurementType = value;
                     this.RaisePropertyChanged();
@@ -246,6 +248,7 @@ namespace Wetr.Simulator.ViewModels
 
         public ICommand AddDeviceCommand { set; get; }
         public ICommand RemoveDeviceCommand { set; get; }
+        public ICommand StartSimulation { set; get; }
         #endregion
 
         public ConfiguratorVM(IRestClient restClient)
@@ -258,7 +261,7 @@ namespace Wetr.Simulator.ViewModels
             this.AvailableMeasurementDeviceVMs = new ObservableCollection<MeasurementDeviceVM>();
             foreach(var device in restClient.GetAllDevices())
             {
-                this.AvailableMeasurementDeviceVMs.Add(new MeasurementDeviceVM(device));
+                this.AvailableMeasurementDeviceVMs.Add(new SimulatedMeasurementDeviceVM(device));
                 this.RaisePropertyChanged("AvailableMeasurementDeviceVMs");
             }
 
@@ -270,8 +273,9 @@ namespace Wetr.Simulator.ViewModels
                 this.MeasurementTypeVMs.Add(new MeasurementTypeVM(type));
                 this.RaisePropertyChanged("MeasurementTypeVMs");
             }
-        }
 
+            this.SelectedMeasurementType = this.MeasurementTypeVMs.FirstOrDefault();
+        }
         private void RemoveDevice(object obj)
         {
             if (this.SelectedSelectedDevice != null)
@@ -281,11 +285,8 @@ namespace Wetr.Simulator.ViewModels
 
                 this.SelectedMeasurementDeviceVMs.Remove(this.SelectedSelectedDevice);
                 this.RaisePropertyChanged("SelectedMeasurementDeviceVMs");
-
-                
             }
         }
-
         private void AddDevice(object obj)
         {
             if(this.SelectedAvailableDevice != null)
@@ -296,6 +297,18 @@ namespace Wetr.Simulator.ViewModels
                 this.AvailableMeasurementDeviceVMs.Remove(this.SelectedAvailableDevice);
                 this.RaisePropertyChanged("AvailableMeasurementDeviceVMs");
             }
+        }
+        public SimulatorConfiguration BundleConfiguration()
+        {
+            return new SimulatorConfiguration(this.StartDate,
+                this.EndDate,
+                this.SelectedMeasurementType,
+                this.RangeFrom,
+                this.RangeTo,
+                this.SimulationSpeed,
+                this.SelectedDistributionStrategy,
+                this.HoursTimespan
+            );       
         }
     }
 }

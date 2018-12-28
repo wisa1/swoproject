@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using Wetr.Server.BL.IDefinition;
 using System;
 using Wetr.Server.DAL.DTO;
-using System.Collections.Generic;
 using System.Windows.Input;
 using System.Linq;
 

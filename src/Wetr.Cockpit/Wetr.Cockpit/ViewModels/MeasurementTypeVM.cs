@@ -1,5 +1,4 @@
-﻿using Wetr.Server.BL.IDefinition;
-using Wetr.Server.DAL.DTO;
+﻿using Wetr.Server.DAL.DTO;
 
 namespace Wetr.Cockpit.ViewModels
 {

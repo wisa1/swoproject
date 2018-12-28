@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Wetr.Simulator.DataProvider;
+using Wetr.Simulator.Helpers;
 using Wetr.Simulator.ViewModels;
 
 namespace Wetr.Simulator.Views
@@ -25,6 +26,18 @@ namespace Wetr.Simulator.Views
         {
             InitializeComponent();
             DataContext = new ConfiguratorVM(new MockRestClient());
+
+            var mvm = DataContext as ConfiguratorVM;
+            mvm.StartSimulation = new RelayCommand(StartSimulation);
+        }
+
+        private void StartSimulation(object obj)
+        {
+            var mvm = DataContext as ConfiguratorVM;
+            var config = mvm.BundleConfiguration();
+            SimulationWindow sim = new SimulationWindow(config, mvm.SelectedMeasurementDeviceVMs);
+            sim.Owner = this;
+            sim.Show();
         }
     }
 }

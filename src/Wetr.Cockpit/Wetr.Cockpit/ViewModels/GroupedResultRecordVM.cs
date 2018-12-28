@@ -1,6 +1,5 @@
 ﻿using System;
 using Wetr.Server.Common;
-using Wetr.Server.DAL.DTO;
 using static Wetr.Server.Common.Constants;
 
 namespace Wetr.Cockpit.ViewModels
