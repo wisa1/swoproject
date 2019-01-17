@@ -19,10 +19,7 @@
         FontFamily="{StaticResource DefaultFont}"
         Title="SimulationWindow" Height="450" Width="800"
         >
-    <controls:MetroWindow.Resources>
-        <help:InverseBooleanConverter x:Key="InverseBooleanConverter" />    
-    </controls:MetroWindow.Resources>
-    
+
     <dockablz:Layout>
         <dragablz:TabablzControl Grid.Column="1"
                                  Margin="8"

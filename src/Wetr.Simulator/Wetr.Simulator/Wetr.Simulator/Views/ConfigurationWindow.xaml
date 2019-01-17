@@ -68,11 +68,11 @@
                 <!--Left Margin-->
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="1*"/>
                 <!-- Margin middle -->
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
                 <!-- Right Margin -->
             </Grid.ColumnDefinitions>
@@ -89,22 +89,22 @@
             <!-- Line 0: Starting Date and Time-->
             <TextBlock Text="Start:" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"/>
             <TextBlock Text="Date: " Grid.Row="0" Grid.Column="2"/>
-            <DatePicker Grid.Row="0" Grid.Column="3"
-                        SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"                       
+            <DatePicker Grid.Row="0" Grid.Column="3" Margin="0 0 0 10"
+                        SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"                       
             />
             <TextBlock Text="Time: " Grid.Row="0" Grid.Column="5"/>
-            <materialDesign:TimePicker Grid.Row="0" Grid.Column="6" Margin="0"
-                                       SelectedTime="{Binding StartDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"                           
+            <materialDesign:TimePicker Grid.Row="0" Grid.Column="6" Margin="0 0 0 10"
+                                       SelectedTime="{Binding StartDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"                           
             />
             <!-- Line 1: Ending   Date and Time-->
             <TextBlock Text="End:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"/>
             <TextBlock Text="Date: " Grid.Row="1" Grid.Column="2"/>
-            <DatePicker Grid.Row="1" Grid.Column="3"
-                        SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"                       
+            <DatePicker Grid.Row="1" Grid.Column="3" Margin="0 0 0 10"
+                        SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"                       
             />
             <TextBlock Text="Time: " Grid.Row="1" Grid.Column="5"/>
-            <materialDesign:TimePicker Grid.Row="1" Grid.Column="6" Margin="0"
-                                       SelectedTime="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"                           
+            <materialDesign:TimePicker Grid.Row="1" Grid.Column="6" Margin="0 0 0 10"
+                                       SelectedTime="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"                           
             />
             <!-- Line 2: Measurement Type      -->
             <TextBlock Text="Measurement Type:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"/>

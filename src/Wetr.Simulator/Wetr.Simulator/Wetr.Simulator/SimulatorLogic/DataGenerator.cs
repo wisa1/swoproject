@@ -21,8 +21,38 @@ namespace Wetr.Simulator.SimulatorLogic
                     return CalcNextLinearValue(config, lastDate, lastValue);
                 case Server.Common.Constants.DistributionStrategy.Random:
                     return CalcNextRandomValue(config, lastDate, lastValue);
+                case Server.Common.Constants.DistributionStrategy.Sinus:
+                    return CalcNextSinusValue(config, lastDate, lastValue);
             }
             return null;
+        }
+
+        private static MeasureModel CalcNextSinusValue(SimulatorConfiguration config, DateTime lastDate, double lastValue)
+        {
+            if (lastDate == default(DateTime))
+            {
+                lastDate = config.StartDateTime;
+                lastValue = config.ValueRangeFrom;
+            }
+
+            int hour = lastDate.AddHours(config.HoursTimespan).Hour;
+            double x = ((hour == 0) ? 0.01 : hour) / 24 * Math.PI;
+            double offset, multiplacator;
+            if (config.ValueRangeFrom < 0)
+            {
+                offset = config.ValueRangeFrom;
+                multiplacator = config.ValueRangeTo + Math.Abs(config.ValueRangeFrom);
+            } else
+            {
+                offset = config.ValueRangeFrom;
+                multiplacator = config.ValueRangeTo - config.ValueRangeFrom;
+            }
+                
+            return new MeasureModel()
+            {
+                DateTime = lastDate.AddHours(config.HoursTimespan),
+                Value = offset + (Math.Abs(multiplacator)) * Math.Sin(x)
+            };
         }
 
         private static MeasureModel CalcNextRandomValue(SimulatorConfiguration config, DateTime lastDate, double lastValue)

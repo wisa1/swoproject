@@ -11,7 +11,6 @@ namespace Wetr.Simulator.Helpers
     {
         private readonly Action<object> executeAction;
         private readonly Predicate<object> canExecutePredicate;
-        private ICommand stopSimulation;
 
         public RelayCommand(Action<object> execute)
             : this(execute, null)

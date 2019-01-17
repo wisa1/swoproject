@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Wetr.Server.DAL.DTO;
 using Wetr.Simulator.Helpers;
+using Wetr.Simulator.REST.Models;
 using Wetr.Simulator.ViewModels;
 
 namespace Wetr.Simulator.DataProvider
@@ -112,7 +112,7 @@ namespace Wetr.Simulator.DataProvider
             return this._measurementTypes;
         }
 
-        public void SaveData(IEnumerable<MeasureModel> data, SimulatorConfiguration config)
+        public void SaveData(IEnumerable<MeasureModel> data, SimulatorConfiguration config, int deviceId)
         {
             //TODO once the rest service stands...
         }

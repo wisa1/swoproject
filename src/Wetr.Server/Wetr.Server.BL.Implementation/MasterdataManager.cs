@@ -24,14 +24,7 @@ namespace Wetr.Server.BL.Implementation
         }
 
         //MeasurementDevice
-        public async Task<IEnumerable<MeasurementDevice>> FindAllMeasurementDevicesAsync()
-        {
-            return await this.measurementDeviceDAO.FindAllAsync();
-        }
-        public async Task<int> DeleteMeasurementDeviceAsync(MeasurementDevice measurementDevice)
-        {
-            return await measurementDeviceDAO.DeleteAsync(measurementDevice);
-        }
+        //--Create
         public async Task<MeasurementDevice> InsertMeasurementDeviceAsync(MeasurementDevice measurementDevice)
         {
             await measurementDeviceDAO.InsertAsync(measurementDevice);
@@ -39,10 +32,29 @@ namespace Wetr.Server.BL.Implementation
             measurementDevice.ID = id;
             return measurementDevice;
         }
+
+        //--Read
+        public async Task<IEnumerable<MeasurementDevice>> FindAllMeasurementDevicesAsync()
+        {
+            return await this.measurementDeviceDAO.FindAllAsync();
+        }
+        public async Task<MeasurementDevice> FindMeasurementDeviceById(int id)
+        {
+            return await measurementDeviceDAO.FindByIDAsync(id);
+        }
+
+        //--Update
         public async Task<int> UpdateMeasurementDeviceAsync(MeasurementDevice measurementDevice)
         {
             return await measurementDeviceDAO.UpdateAsync(measurementDevice);
         }
+
+        //--Delete
+        public async Task<int> DeleteMeasurementDeviceAsync(MeasurementDevice measurementDevice)
+        {
+            return await measurementDeviceDAO.DeleteAsync(measurementDevice);
+        }
+        
 
         //Community
         public async Task<Community> FindCommunityByIdAsync(int id)

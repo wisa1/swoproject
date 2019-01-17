@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using Wetr.Cockpit.ViewModels;
+using Wetr.Server.DAL.DTO;
 
 namespace Wetr.Cockpit.Views
 {
@@ -10,6 +12,8 @@ namespace Wetr.Cockpit.Views
         public MeasurementDeviceDetails()
         {
             InitializeComponent();
+
+            MeasurementDeviceVM context = (MeasurementDeviceVM)DataContext;
         }
     }
 }

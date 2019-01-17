@@ -80,14 +80,25 @@ namespace Wetr.Server.DAL.DAO
                 select = $"SELECT {filter.AggregationType.ToSqlAggregate()}" + "([Value]) AS Value ";
             }
 
-            string from = "FROM [Measurement] ";
+            string from = "FROM [Measurement] INNER JOIN [Measurement Device] ON ([Measurement].DeviceID = [Measurement Device].ID)";
 
             List<string> where = new List<string>();
             if (filter.MeasurementDevice != null)
             {
+                /*
                 where.Add("[DeviceID] = @DeviceID ");
                 parameters.Add(new SqlParameter("@DeviceID", filter.MeasurementDevice.ID));
-
+                */
+                if (filter.RadiusKm != 0)
+                {
+                    where.Add($"([DeviceID] = @DeviceID  OR " +
+                        $"(geography::Point({filter.MeasurementDevice.Latitude.ToString().Replace(',','.')}, {filter.MeasurementDevice.Longitude.ToString().Replace(',', '.')}, 4326).STDistance(geography::Point(ISNULL([Latitude],0),ISNULL([Longitude],0), 4326))) < {filter.RadiusKm * 1000}) ");
+                    parameters.Add(new SqlParameter("@DeviceID", filter.MeasurementDevice.ID));
+                } else
+                {
+                    where.Add("[DeviceID] = @DeviceID ");
+                    parameters.Add(new SqlParameter("@DeviceID", filter.MeasurementDevice.ID));
+                }
             }
             if (filter.MeasurementType != null)
             {
@@ -133,6 +144,7 @@ namespace Wetr.Server.DAL.DAO
                 }
             }
             sql.Append(groupBy);
+            string debug = sql.ToString();
             return sql.ToString();
         }
 

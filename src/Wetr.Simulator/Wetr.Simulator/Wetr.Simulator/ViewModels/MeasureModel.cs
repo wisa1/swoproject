@@ -14,7 +14,6 @@ namespace Wetr.Simulator.ViewModels
 
         public static CartesianMapper<MeasureModel> mapper = 
             Mappers.Xy<MeasureModel>()
-                //.X(model => (double)model.DateTime.Ticks / TimeSpan.FromHours(1).Ticks)
                 .X(model => model.DateTime.Ticks)
                 .Y(model => model.Value);
 

@@ -13,6 +13,7 @@ namespace Wetr.Cockpit.ViewModels
         private ObservableCollection<MeasurementDeviceVM> devices;
         private MeasurementDeviceVM current;
         private ObservableCollection<CommunityVM> communities;
+        
 
         public ICommand SaveCommand { set; get; }
         public ICommand DeleteCommand { set; get; }

@@ -16,5 +16,6 @@ namespace Wetr.Server.Common
         public MeasurementType MeasurementType { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
+        public double RadiusKm { get; set; }
     }
 }

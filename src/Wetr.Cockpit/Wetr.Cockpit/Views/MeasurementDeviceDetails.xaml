@@ -43,8 +43,8 @@
                         <Binding Path="DeviceName" UpdateSourceTrigger="PropertyChanged"></Binding>
                     </TextBox.Text>
                 </TextBox>
-                
-                
+
+
                 <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" Kind="City" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
                 <ComboBox materialDesign:HintAssist.Hint="City"
                           Grid.Row="1" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
@@ -52,7 +52,7 @@
                           SelectedItem="{Binding Path=Community, Mode=TwoWay}"
                           DisplayMemberPath="Name"
                 ></ComboBox>
-                
+
                 <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" Kind="AddressMarker" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"/>
                 <TextBox x:Name="AddressTextBox" Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                     <materialDesign:HintAssist.Hint>
@@ -105,7 +105,6 @@
                                       RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:ManageDataView}}"
                             CommandParameter="{Binding}">
                     </Button>
-
                 </Grid>
             </Grid>
         </Grid>

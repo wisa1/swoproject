@@ -1,5 +1,5 @@
 ﻿using Wetr.Simulator.ViewModels;
-using Wetr.Server.DAL.DTO;
+using Wetr.Simulator.REST.Models;
 
 namespace Wetr.Simulator.ViewModels
 {
@@ -12,7 +12,7 @@ namespace Wetr.Simulator.ViewModels
             this.measurementType = measurementType;
         }
 
-        public int ID
+        public int? ID
         {
             get
             {

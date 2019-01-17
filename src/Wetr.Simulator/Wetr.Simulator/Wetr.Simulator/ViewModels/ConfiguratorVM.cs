@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,7 +14,7 @@ using static Wetr.Server.Common.Constants;
 
 namespace Wetr.Simulator.ViewModels
 {
-    public class ConfiguratorVM : ViewModelBase
+    public class ConfiguratorVM : ViewModelBase, IDataErrorInfo
     {
         #region private fields
         private IRestClient restClient;        
@@ -45,6 +46,7 @@ namespace Wetr.Simulator.ViewModels
                 {
                     this._startDate = value;
                     this.RaisePropertyChanged();
+                    this.RaisePropertyChanged("EndDate");
                 }
             }
             get
@@ -62,6 +64,7 @@ namespace Wetr.Simulator.ViewModels
                 {
                     this._endDate = value;
                     this.RaisePropertyChanged();
+                    this.RaisePropertyChanged("StartDate");
                 }
             }
             get
@@ -249,6 +252,31 @@ namespace Wetr.Simulator.ViewModels
         public ICommand AddDeviceCommand { set; get; }
         public ICommand RemoveDeviceCommand { set; get; }
         public ICommand StartSimulation { set; get; }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "StartDate":
+                        if (StartDate > EndDate)
+                            return "StartDate must be earlier than EndDate";
+                        break;
+                    case "EndDate":
+                        if (EndDate < StartDate)
+                            return "EndDate must be after StartDate";
+                        break;
+                }
+                return String.Empty;
+
+            }
+
+        }
+
+
         #endregion
 
         public ConfiguratorVM(IRestClient restClient)

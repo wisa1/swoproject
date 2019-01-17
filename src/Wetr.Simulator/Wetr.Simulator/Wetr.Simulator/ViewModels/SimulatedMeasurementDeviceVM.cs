@@ -1,40 +1,18 @@
 ﻿using LiveCharts;
-using LiveCharts.Wpf;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Wetr.Server.Common;
-using Wetr.Server.DAL.DTO;
 using Wetr.Simulator.DataProvider;
 using Wetr.Simulator.Helpers;
+using Wetr.Simulator.REST.Models;
 using Wetr.Simulator.SimulatorLogic;
 
 namespace Wetr.Simulator.ViewModels
 {
     public class SimulatedMeasurementDeviceVM : MeasurementDeviceVM
     {
-        /*private ObservableCollection<GroupedResultRecord> _values;
-        public ObservableCollection<GroupedResultRecord> Values
-        {
-            set
-            {
-                if(this._values != value)
-                {
-                    this._values = value;
-                    this.RaisePropertyChanged();
-                }
-            }
-            get
-            {
-                return this._values;
-            }
-        }
-        */
+        
+
         private DispatcherTimer timer;
 
         private SimulatorConfiguration config;
@@ -48,6 +26,7 @@ namespace Wetr.Simulator.ViewModels
         private DateTime lastValueDate;
         private double lastValue;
         public Func<double, string> Formatter { set; get; }
+        public bool valuesSaved = false;
 
         public SimulatedMeasurementDeviceVM(MeasurementDevice device) : base(device)
         {
@@ -57,13 +36,18 @@ namespace Wetr.Simulator.ViewModels
             Charting.For<MeasureModel>(MeasureModel.mapper);
             Formatter = MeasureModel.Formatter;
 
+            if (config != null)
+            {
+                this.SetAxisLimits(config.StartDateTime, config.EndDateTime);
+            }
+
             this.StopSimulationCommand = new RelayCommand(StopSimulation, StopSimulationCanExecute);
             this.SaveSimulatedDataCommand = new RelayCommand(SaveSimulatedData, SaveSimulatedDataCanExecute);
         }
 
         private bool SaveSimulatedDataCanExecute(object obj)
         {
-            return !timer.IsEnabled;
+            return !timer.IsEnabled && !valuesSaved;
         }
 
         private bool StopSimulationCanExecute(object obj)
@@ -73,8 +57,9 @@ namespace Wetr.Simulator.ViewModels
 
         private void SaveSimulatedData(object obj)
         {
-            IRestClient client = new MockRestClient();
-            client.SaveData(ChartValues, config);
+            IRestClient client = new WSClient();
+            client.SaveData(ChartValues, config, this.MeasurementDevice.ID.GetValueOrDefault());
+            valuesSaved = true;
         }
 
         private void StopSimulation(object obj)
@@ -115,10 +100,11 @@ namespace Wetr.Simulator.ViewModels
 
         public void StartSimulation(SimulatorConfiguration config)
         {
+            SetAxisLimits(config.StartDateTime, config.EndDateTime);
             timer = new DispatcherTimer();
             timer.Tick += new EventHandler(dispatcherTimer_Tick);
             this.config = config;
-            timer.Interval = new TimeSpan(0, 0, 0,  Convert.ToInt32(1 / this.config.SimulationSpeed));
+            timer.Interval = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(1000 / this.config.SimulationSpeed));
             timer.Start();
 
         }

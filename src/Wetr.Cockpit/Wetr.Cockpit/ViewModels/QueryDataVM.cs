@@ -26,8 +26,9 @@ namespace Wetr.Cockpit.ViewModels
         private AggregationType selectedAggregationType;
         private MeasurementTypeVM selectedMeasurementType;
 
-        public DateTime dateTimeFrom { set; get; }
-        public DateTime dateTimeTo { set; get; }
+        private DateTime dateTimeFrom;
+        private DateTime dateTimeTo;
+        private int radiusKm;
 
         public ObservableCollection<MeasurementDeviceVM> Devices
         {
@@ -158,6 +159,21 @@ namespace Wetr.Cockpit.ViewModels
                 return this.dateTimeTo;
             }
         }
+        public int RadiusKm
+        {
+            set
+            {
+                if (this.radiusKm != value)
+                {
+                    this.radiusKm = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+            get
+            {
+                return this.radiusKm;
+            }
+        }
 
         public IEnumerable<PeriodType> PeriodTypeValues
         {
@@ -196,6 +212,12 @@ namespace Wetr.Cockpit.ViewModels
                         return "Invalid Aggregation/Period Settings";
                     }
                 }
+
+                if (columnName == "RadiusKm")
+                {
+                    return string.Empty;
+                }
+                    
                 return string.Empty;
             }
         }
@@ -224,7 +246,9 @@ namespace Wetr.Cockpit.ViewModels
                 MeasurementDevice = this.SelectedDevice?.MeasurementDevice,
                 MeasurementType = this.selectedMeasurementType?.MeasurementType,
                 DateFrom = this.DateTimeFrom,
-                DateTo = this.DateTimeTo
+                DateTo = this.DateTimeTo,
+                RadiusKm = 10
+                
             };
 
             if(mf.PeriodType != PeriodType.None && mf.AggregationType == AggregationType.None)

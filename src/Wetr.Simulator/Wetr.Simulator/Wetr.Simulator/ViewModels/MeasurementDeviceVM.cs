@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Wetr.Server.DAL.DTO;
+using Wetr.Simulator.REST.Models;
 using Wetr.Simulator.ViewModels;
 
 namespace Wetr.Simulator.ViewModels
@@ -14,14 +14,14 @@ namespace Wetr.Simulator.ViewModels
             this.measurementDevice = measurementDevice ?? throw new System.ArgumentException("MeasurementDevice must not be null!");
         }
 
-        public int ID
+        public int? ID
         {
             get
             {
                 return measurementDevice.ID;
             }
         }
-        public int CommunityID
+        public int? CommunityID
         {
             get
             {
@@ -66,7 +66,7 @@ namespace Wetr.Simulator.ViewModels
                 }
             }
         }
-        public double Longitude
+        public double? Longitude
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Wetr.Simulator.ViewModels
                 }
             }
         }
-        public double Latitude
+        public double? Latitude
         {
             get
             {
