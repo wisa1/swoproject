@@ -18,7 +18,7 @@ namespace Wetr.Server.BL.Implementation
             measurementDAO = new MeasurementDAO(connFac);
         }
 
-        public async Task<int> InsertMeasurement(Measurement measurement)
+        public async Task<int> InsertMeasurementAsync(Measurement measurement)
         {
             return await measurementDAO.InsertAsync(measurement);
         }

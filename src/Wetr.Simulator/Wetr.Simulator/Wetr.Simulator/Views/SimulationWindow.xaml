@@ -43,7 +43,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <lvc:CartesianChart Grid.Column="0" Grid.Row="0"  AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}">
+                        <lvc:CartesianChart Grid.Column="0" Grid.Row="0"  DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}">
                             <lvc:CartesianChart.Series>
                                 <lvc:LineSeries Values="{Binding ChartValues}"
                                                 PointGeometry="{x:Null}"

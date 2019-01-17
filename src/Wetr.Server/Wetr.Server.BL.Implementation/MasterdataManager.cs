@@ -38,7 +38,7 @@ namespace Wetr.Server.BL.Implementation
         {
             return await this.measurementDeviceDAO.FindAllAsync();
         }
-        public async Task<MeasurementDevice> FindMeasurementDeviceById(int id)
+        public async Task<MeasurementDevice> FindMeasurementDeviceByIdAsync(int id)
         {
             return await measurementDeviceDAO.FindByIDAsync(id);
         }

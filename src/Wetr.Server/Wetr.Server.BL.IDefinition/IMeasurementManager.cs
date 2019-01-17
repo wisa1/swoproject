@@ -11,7 +11,6 @@ namespace Wetr.Server.BL.IDefinition
     public interface IMeasurementManager
     {
         Task<IEnumerable<GroupedResultRecord>> PerformQueryAsync(MeasurementFilter filter);
-
-        Task<int> InsertMeasurement(Measurement measurement);
+        Task<int> InsertMeasurementAsync(Measurement measurement);
     }
 }

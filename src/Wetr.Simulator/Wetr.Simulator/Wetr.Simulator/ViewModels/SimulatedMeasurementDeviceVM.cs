@@ -104,21 +104,32 @@ namespace Wetr.Simulator.ViewModels
             timer = new DispatcherTimer();
             timer.Tick += new EventHandler(dispatcherTimer_Tick);
             this.config = config;
-            timer.Interval = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(1000 / this.config.SimulationSpeed));
+            timer.Interval = new TimeSpan(0, 0, 0, 1);
             timer.Start();
 
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            //1.) Generate new MeasureModel
-            MeasureModel temp = DataGenerator.CalculateNextValue(this.config, this.lastValueDate, this.lastValue);
-            //2.) Add new Model to ChartValues
-            this.chartValues.Add(temp);
-            //3.) Set lastValue and lastValueDate
-            this.lastValue = temp.Value;
-            this.lastValueDate = temp.DateTime;
-            SetAxisLimits(config.StartDateTime, lastValueDate);
+            for(int i = 0; i < config.SimulationSpeed && lastValueDate <= config.EndDateTime ; i++)
+            {
+                //1.) Generate new MeasureModel
+                MeasureModel temp = DataGenerator.CalculateNextValue(this.config, this.lastValueDate, this.lastValue);
+                //2.) Add new Model to ChartValues
+                this.chartValues.Add(temp);
+                //3.) Set lastValue and lastValueDate
+                this.lastValue = temp.Value;
+                this.lastValueDate = temp.DateTime;
+            }
+
+            if(config.StartDateTime > lastValueDate.AddMonths(-1))
+            {
+                SetAxisLimits(config.StartDateTime, lastValueDate);
+            } else
+            {
+                SetAxisLimits(lastValueDate.AddMonths(-1), lastValueDate);
+            }
+                
 
             if(this.lastValueDate > config.EndDateTime)
             {

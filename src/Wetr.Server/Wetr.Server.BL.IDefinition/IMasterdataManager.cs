@@ -15,7 +15,7 @@ namespace Wetr.Server.BL.IDefinition
 
         //--Read
         Task<IEnumerable<MeasurementDevice>> FindAllMeasurementDevicesAsync();
-        Task<MeasurementDevice> FindMeasurementDeviceById(int id);
+        Task<MeasurementDevice> FindMeasurementDeviceByIdAsync(int id);
 
         //--Update
         Task<int> UpdateMeasurementDeviceAsync(MeasurementDevice measurementDevice);

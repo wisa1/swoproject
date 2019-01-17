@@ -21,7 +21,7 @@ namespace Wetr.WebService.Controllers
         [Route("measurements", Name = nameof(InsertMeasurement))]
         public async Task InsertMeasurement([FromBody]Measurement measurement)
         {
-            int result = await measurementManager.InsertMeasurement(measurement);
+            int result = await measurementManager.InsertMeasurementAsync(measurement);
 
         }
 
@@ -33,7 +33,7 @@ namespace Wetr.WebService.Controllers
         {
             foreach (var measurement in measurements)
             {
-                await measurementManager.InsertMeasurement(measurement);
+                await measurementManager.InsertMeasurementAsync(measurement);
             }
         }
     }
