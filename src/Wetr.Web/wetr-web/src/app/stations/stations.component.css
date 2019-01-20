@@ -1,0 +1,7 @@
+.highlight {
+  background-color: yellow;
+}
+
+/deep/ .mat-figure {
+  align-items: normal !important;
+}

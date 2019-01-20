@@ -9,7 +9,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatCheckbox, MatCheckboxModule, MatTableModule, MatGridListModule } from '@angular/material';
 import { StationsComponent } from './stations/stations.component';
 
 import { environment } from 'src/environments/environment';
@@ -34,10 +34,14 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
+    MatCheckboxModule,
     MatIconModule,
     MatListModule,
     ApiModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule,
+    MatTableModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
