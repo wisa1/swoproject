@@ -1,0 +1,11 @@
+<p *ngIf="device">{{device.address}}</p>
+<div class="mapContainer">
+
+  <agm-map *ngIf="device" [latitude]="device.Longitude" [longitude]="device.Latitude" [zoom]="12" [zoomControl]="false">
+    <agm-marker [latitude]="device.Longitude" [longitude]="device.Latitude"></agm-marker>
+  </agm-map>
+
+  <button (click)="printcurrent()">print</button>
+</div>
+
+

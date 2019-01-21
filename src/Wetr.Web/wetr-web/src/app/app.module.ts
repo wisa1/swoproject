@@ -15,15 +15,19 @@ import { StationsComponent } from './stations/stations.component';
 import { environment } from 'src/environments/environment';
 import { ApiModule } from './Core/api.module';
 import { HttpClientModule } from '@angular/common/http';
+import { StationDetailComponent } from './station-detail/station-detail.component';
 
-
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     NavigationComponent,
-    StationsComponent
+    StationsComponent,
+    StationDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -41,9 +45,12 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     AppRoutingModule,
     MatTableModule,
-    MatGridListModule
+    MatGridListModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyD_ZP3Mj-PMi1mG_Bfq5K8DJxz3LntJZ2o'}), //Maps
+    FormsModule,
+    NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [GoogleMapsAPIWrapper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

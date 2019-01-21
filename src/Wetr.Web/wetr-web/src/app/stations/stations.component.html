@@ -1,6 +1,6 @@
 
 <mat-grid-list cols="2">
-    <mat-grid-tile class="alignNormal">
+    <mat-grid-tile class="alignNormal" width>
         <table mat-table [dataSource]="devices">
             <!--Showin in Dashboard-->
             <ng-container matColumnDef="ShownInDashboard">
@@ -32,7 +32,8 @@
           </table>
 
     </mat-grid-tile>
-    <mat-grid-tile>2</mat-grid-tile>
-
+    <mat-grid-tile>
+      <app-station-detail [device]="selectedDevice"></app-station-detail>
+    </mat-grid-tile>
 </mat-grid-list>
 

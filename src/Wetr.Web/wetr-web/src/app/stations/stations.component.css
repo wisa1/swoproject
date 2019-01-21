@@ -2,6 +2,34 @@
   background-color: yellow;
 }
 
+.alignNormal {
+  overflow-y: scroll;
+}
+
+/deep/ .mat-header-cell{
+ text-align: center !important;
+ padding-left: 20px;
+ padding-right: 20px;
+}
+
+/deep/ .mat-cell {
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+}
+
+/deep/ .cdk-column-ShownInDashboard {
+  text-align: center !important;
+}
+
+/deep/ .mat-table{
+  width: -webkit-fill-available;
+}
+
 /deep/ .mat-figure {
-  align-items: normal !important;
+  align-items: flex-start !important;
+  justify-content: inherit !important;
+  margin-block-start: 1em !important;
+  margin-block-end: 1em !important;
+  margin-inline-start: 40px !important;
+  margin-inline-end: 40px !important;
 }
