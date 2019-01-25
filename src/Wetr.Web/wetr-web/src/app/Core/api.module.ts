@@ -3,6 +3,7 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { CommunitiesService } from './api/communities.service';
 import { DevicesService } from './api/devices.service';
 import { MeasurementTypesService } from './api/measurementTypes.service';
 import { MeasurementsService } from './api/measurements.service';
@@ -12,6 +13,7 @@ import { MeasurementsService } from './api/measurements.service';
   declarations: [],
   exports:      [],
   providers: [
+    CommunitiesService,
     DevicesService,
     MeasurementTypesService,
     MeasurementsService ]

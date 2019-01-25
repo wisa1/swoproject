@@ -40,6 +40,11 @@ namespace Wetr.Simulator.REST
 
 
         /// <summary>
+        /// Gets the ICommunities.
+        /// </summary>
+        ICommunities Communities { get; }
+
+        /// <summary>
         /// Gets the IDevices.
         /// </summary>
         IDevices Devices { get; }

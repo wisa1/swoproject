@@ -20,6 +20,8 @@ import { StationDetailComponent } from './station-detail/station-detail.componen
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
+import { MeasurementTypesApi } from './Core/api/MeasurementTypesApi';
+import { MeasurementsService } from './Core';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,7 @@ import { AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
     MatGridListModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyD_ZP3Mj-PMi1mG_Bfq5K8DJxz3LntJZ2o'}), //Maps
     FormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
   ],
   providers: [GoogleMapsAPIWrapper],
   bootstrap: [AppComponent]

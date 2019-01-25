@@ -18,14 +18,14 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs/Observable';
 
-import { MeasurementType } from '../model/measurementType';
+import { Community } from '../model/community';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class MeasurementTypesService {
+export class CommunitiesService {
 
     protected basePath = 'http://localhost:62005';
     public defaultHeaders = new HttpHeaders();
@@ -62,10 +62,10 @@ export class MeasurementTypesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public measurementTypesGetAllTypes(observe?: 'body', reportProgress?: boolean): Observable<Array<MeasurementType>>;
-    public measurementTypesGetAllTypes(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<MeasurementType>>>;
-    public measurementTypesGetAllTypes(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<MeasurementType>>>;
-    public measurementTypesGetAllTypes(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public communitiesGetAllCommunities(observe?: 'body', reportProgress?: boolean): Observable<Array<Community>>;
+    public communitiesGetAllCommunities(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Community>>>;
+    public communitiesGetAllCommunities(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Community>>>;
+    public communitiesGetAllCommunities(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -85,7 +85,51 @@ export class MeasurementTypesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<Array<MeasurementType>>(`${this.basePath}/MeasurementTypes`,
+        return this.httpClient.get<Array<Community>>(`${this.basePath}/communities`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public communitiesGetCommunityById(id: number, observe?: 'body', reportProgress?: boolean): Observable<Community>;
+    public communitiesGetCommunityById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Community>>;
+    public communitiesGetCommunityById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Community>>;
+    public communitiesGetCommunityById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling communitiesGetCommunityById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json',
+            'text/json',
+            'application/xml',
+            'text/xml'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Community>(`${this.basePath}/communities/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

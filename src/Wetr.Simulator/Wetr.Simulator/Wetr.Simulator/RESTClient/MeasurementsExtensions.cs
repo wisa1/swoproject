@@ -22,9 +22,9 @@ namespace Wetr.Simulator.REST
             /// </param>
             /// <param name='measurement'>
             /// </param>
-            public static void InsertMeasurement(this IMeasurements operations, Measurement measurement)
+            public static object InsertMeasurement(this IMeasurements operations, Measurement measurement)
             {
-                Task.Factory.StartNew(s => ((IMeasurements)s).InsertMeasurementAsync(measurement), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IMeasurements)s).InsertMeasurementAsync(measurement), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -35,9 +35,12 @@ namespace Wetr.Simulator.REST
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task InsertMeasurementAsync(this IMeasurements operations, Measurement measurement, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> InsertMeasurementAsync(this IMeasurements operations, Measurement measurement, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.InsertMeasurementWithHttpMessagesAsync(measurement, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.InsertMeasurementWithHttpMessagesAsync(measurement, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <param name='operations'>
@@ -45,9 +48,9 @@ namespace Wetr.Simulator.REST
             /// </param>
             /// <param name='measurements'>
             /// </param>
-            public static void InsertMultipleMeasurements(this IMeasurements operations, IList<Measurement> measurements)
+            public static object InsertMultipleMeasurements(this IMeasurements operations, IList<Measurement> measurements)
             {
-                Task.Factory.StartNew(s => ((IMeasurements)s).InsertMultipleMeasurementsAsync(measurements), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IMeasurements)s).InsertMultipleMeasurementsAsync(measurements), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -58,9 +61,70 @@ namespace Wetr.Simulator.REST
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task InsertMultipleMeasurementsAsync(this IMeasurements operations, IList<Measurement> measurements, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> InsertMultipleMeasurementsAsync(this IMeasurements operations, IList<Measurement> measurements, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.InsertMultipleMeasurementsWithHttpMessagesAsync(measurements, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.InsertMultipleMeasurementsWithHttpMessagesAsync(measurements, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='aggregate'>
+            /// </param>
+            /// <param name='period'>
+            /// </param>
+            /// <param name='deviceId'>
+            /// </param>
+            /// <param name='latitude'>
+            /// </param>
+            /// <param name='longitude'>
+            /// </param>
+            /// <param name='measurementTypeId'>
+            /// </param>
+            /// <param name='dateFrom'>
+            /// </param>
+            /// <param name='dateTo'>
+            /// </param>
+            /// <param name='radiusKm'>
+            /// </param>
+            public static IList<GroupedResultRecord> QueryMeasurements(this IMeasurements operations, int aggregate, int period, int deviceId, double? latitude = default(double?), double? longitude = default(double?), int? measurementTypeId = default(int?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), int? radiusKm = default(int?))
+            {
+                return Task.Factory.StartNew(s => ((IMeasurements)s).QueryMeasurementsAsync(aggregate, period, deviceId, latitude, longitude, measurementTypeId, dateFrom, dateTo, radiusKm), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='aggregate'>
+            /// </param>
+            /// <param name='period'>
+            /// </param>
+            /// <param name='deviceId'>
+            /// </param>
+            /// <param name='latitude'>
+            /// </param>
+            /// <param name='longitude'>
+            /// </param>
+            /// <param name='measurementTypeId'>
+            /// </param>
+            /// <param name='dateFrom'>
+            /// </param>
+            /// <param name='dateTo'>
+            /// </param>
+            /// <param name='radiusKm'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<GroupedResultRecord>> QueryMeasurementsAsync(this IMeasurements operations, int aggregate, int period, int deviceId, double? latitude = default(double?), double? longitude = default(double?), int? measurementTypeId = default(int?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), int? radiusKm = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueryMeasurementsWithHttpMessagesAsync(aggregate, period, deviceId, latitude, longitude, measurementTypeId, dateFrom, dateTo, radiusKm, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

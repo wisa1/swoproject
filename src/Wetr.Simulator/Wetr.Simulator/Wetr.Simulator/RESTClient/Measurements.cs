@@ -55,7 +55,7 @@ namespace Wetr.Simulator.REST
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> InsertMeasurementWithHttpMessagesAsync(Measurement measurement, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> InsertMeasurementWithHttpMessagesAsync(Measurement measurement, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (measurement == null)
             {
@@ -121,7 +121,7 @@ namespace Wetr.Simulator.REST
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204)
+            if ((int)_statusCode != 200)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -139,9 +139,27 @@ namespace Wetr.Simulator.REST
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse();
+            var _result = new HttpOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -160,7 +178,7 @@ namespace Wetr.Simulator.REST
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> InsertMultipleMeasurementsWithHttpMessagesAsync(IList<Measurement> measurements, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> InsertMultipleMeasurementsWithHttpMessagesAsync(IList<Measurement> measurements, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (measurements == null)
             {
@@ -226,7 +244,7 @@ namespace Wetr.Simulator.REST
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204)
+            if ((int)_statusCode != 200)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -244,9 +262,196 @@ namespace Wetr.Simulator.REST
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse();
+            var _result = new HttpOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <param name='aggregate'>
+        /// </param>
+        /// <param name='period'>
+        /// </param>
+        /// <param name='deviceId'>
+        /// </param>
+        /// <param name='latitude'>
+        /// </param>
+        /// <param name='longitude'>
+        /// </param>
+        /// <param name='measurementTypeId'>
+        /// </param>
+        /// <param name='dateFrom'>
+        /// </param>
+        /// <param name='dateTo'>
+        /// </param>
+        /// <param name='radiusKm'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<IList<GroupedResultRecord>>> QueryMeasurementsWithHttpMessagesAsync(int aggregate, int period, int deviceId, double? latitude = default(double?), double? longitude = default(double?), int? measurementTypeId = default(int?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), int? radiusKm = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("aggregate", aggregate);
+                tracingParameters.Add("period", period);
+                tracingParameters.Add("deviceId", deviceId);
+                tracingParameters.Add("latitude", latitude);
+                tracingParameters.Add("longitude", longitude);
+                tracingParameters.Add("measurementTypeId", measurementTypeId);
+                tracingParameters.Add("dateFrom", dateFrom);
+                tracingParameters.Add("dateTo", dateTo);
+                tracingParameters.Add("radiusKm", radiusKm);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "QueryMeasurements", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "measurements/query").ToString();
+            List<string> _queryParameters = new List<string>();
+            _queryParameters.Add(string.Format("aggregate={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(aggregate, this.Client.SerializationSettings).Trim('"'))));
+            _queryParameters.Add(string.Format("period={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(period, this.Client.SerializationSettings).Trim('"'))));
+            _queryParameters.Add(string.Format("deviceId={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(deviceId, this.Client.SerializationSettings).Trim('"'))));
+            if (latitude != null)
+            {
+                _queryParameters.Add(string.Format("latitude={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(latitude, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (longitude != null)
+            {
+                _queryParameters.Add(string.Format("longitude={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(longitude, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (measurementTypeId != null)
+            {
+                _queryParameters.Add(string.Format("measurementTypeId={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(measurementTypeId, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (dateFrom != null)
+            {
+                _queryParameters.Add(string.Format("dateFrom={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(dateFrom, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (dateTo != null)
+            {
+                _queryParameters.Add(string.Format("dateTo={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(dateTo, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (radiusKm != null)
+            {
+                _queryParameters.Add(string.Format("radiusKm={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(radiusKm, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<IList<GroupedResultRecord>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<IList<GroupedResultRecord>>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);

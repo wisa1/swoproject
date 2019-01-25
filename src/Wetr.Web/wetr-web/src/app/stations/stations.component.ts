@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DevicesService } from '../Core/api/devices.service';
 import { MeasurementDevice } from '../Core/model/MeasurementDevice';
 import { MatSelectionList, MatRow } from '@angular/material';
-import { Measurement } from '../Core';
 import { MeasurementDeviceLogic } from '../BusinessLogic/MeasurementDeviceLogic';
+import { Community } from '../Core/model/community';
+import { CommunitiesService } from '../Core/api/communities.service';
 
 @Component({
   selector: 'app-stations',
@@ -13,15 +14,22 @@ import { MeasurementDeviceLogic } from '../BusinessLogic/MeasurementDeviceLogic'
 export class StationsComponent implements OnInit {
 
   public devices: MeasurementDevice[];
+  public communities: Community[];
+
   public selectedDevice: MeasurementDevice;
   public selectedDeviceID = -1;
-  displayedColumns: string[] = ['ShownInDashboard', 'Name', 'Address'];
+  displayedColumns: string[] = ['ShownInDashboard', 'Name', 'Address', 'City'];
 
-  constructor(private devicesService: DevicesService) {}
+  constructor(private devicesService: DevicesService,
+              private communitiesService: CommunitiesService) {}
 
   ngOnInit() {
     this.devicesService.devicesGetAllDevices().subscribe(
       val => this.devices = val
+    );
+
+    this.communitiesService.communitiesGetAllCommunities().subscribe(
+      val => this.communities = val
     );
   }
 
@@ -36,6 +44,10 @@ export class StationsComponent implements OnInit {
 
   invertIsInDashboard(device: MeasurementDevice) {
     MeasurementDeviceLogic.invertIsInDashboard(device);
+  }
+
+  getCommunityName(device): string {
+    return this.communities.find(comm => device.CommunityID == comm.ID).Name;
   }
 
   rowSelected(row: MatRow) {

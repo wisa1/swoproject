@@ -43,6 +43,11 @@ namespace Wetr.Simulator.REST
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Gets the ICommunities.
+        /// </summary>
+        public virtual ICommunities Communities { get; private set; }
+
+        /// <summary>
         /// Gets the IDevices.
         /// </summary>
         public virtual IDevices Devices { get; private set; }
@@ -240,6 +245,7 @@ namespace Wetr.Simulator.REST
         /// </summary>
         private void Initialize()
         {
+            this.Communities = new Communities(this);
             this.Devices = new Devices(this);
             this.Measurements = new Measurements(this);
             this.MeasurementTypes = new MeasurementTypes(this);

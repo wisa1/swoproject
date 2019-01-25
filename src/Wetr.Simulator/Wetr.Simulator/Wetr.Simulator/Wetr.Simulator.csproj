@@ -106,8 +106,11 @@
     <Compile Include="DataProvider\WSClient.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="DataProvider\IRestClient.cs" />
+    <Compile Include="RESTClient\Communities.cs" />
+    <Compile Include="RESTClient\CommunitiesExtensions.cs" />
     <Compile Include="RESTClient\Devices.cs" />
     <Compile Include="RESTClient\DevicesExtensions.cs" />
+    <Compile Include="RESTClient\ICommunities.cs" />
     <Compile Include="RESTClient\IDevices.cs" />
     <Compile Include="RESTClient\IMeasurements.cs" />
     <Compile Include="RESTClient\IMeasurementTypes.cs" />
@@ -116,6 +119,8 @@
     <Compile Include="RESTClient\MeasurementsExtensions.cs" />
     <Compile Include="RESTClient\MeasurementTypes.cs" />
     <Compile Include="RESTClient\MeasurementTypesExtensions.cs" />
+    <Compile Include="RESTClient\Models\Community.cs" />
+    <Compile Include="RESTClient\Models\GroupedResultRecord.cs" />
     <Compile Include="RESTClient\Models\Measurement.cs" />
     <Compile Include="RESTClient\Models\MeasurementDevice.cs" />
     <Compile Include="RESTClient\Models\MeasurementType.cs" />

@@ -32,7 +32,7 @@ namespace Wetr.Simulator.REST
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> UpdateDeviceWithHttpMessagesAsync(MeasurementDevice value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UpdateDeviceWithHttpMessagesAsync(MeasurementDevice value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
@@ -41,7 +41,7 @@ namespace Wetr.Simulator.REST
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> InsertDeviceWithHttpMessagesAsync(MeasurementDevice value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> InsertDeviceWithHttpMessagesAsync(MeasurementDevice value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>

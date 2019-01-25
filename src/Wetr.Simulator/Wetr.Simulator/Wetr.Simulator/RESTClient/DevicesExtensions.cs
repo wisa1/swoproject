@@ -44,9 +44,9 @@ namespace Wetr.Simulator.REST
             /// </param>
             /// <param name='value'>
             /// </param>
-            public static void UpdateDevice(this IDevices operations, MeasurementDevice value)
+            public static object UpdateDevice(this IDevices operations, MeasurementDevice value)
             {
-                Task.Factory.StartNew(s => ((IDevices)s).UpdateDeviceAsync(value), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDevices)s).UpdateDeviceAsync(value), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -57,9 +57,12 @@ namespace Wetr.Simulator.REST
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateDeviceAsync(this IDevices operations, MeasurementDevice value, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> UpdateDeviceAsync(this IDevices operations, MeasurementDevice value, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.UpdateDeviceWithHttpMessagesAsync(value, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.UpdateDeviceWithHttpMessagesAsync(value, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <param name='operations'>
@@ -67,9 +70,9 @@ namespace Wetr.Simulator.REST
             /// </param>
             /// <param name='value'>
             /// </param>
-            public static void InsertDevice(this IDevices operations, MeasurementDevice value)
+            public static object InsertDevice(this IDevices operations, MeasurementDevice value)
             {
-                Task.Factory.StartNew(s => ((IDevices)s).InsertDeviceAsync(value), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDevices)s).InsertDeviceAsync(value), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -80,9 +83,12 @@ namespace Wetr.Simulator.REST
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task InsertDeviceAsync(this IDevices operations, MeasurementDevice value, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> InsertDeviceAsync(this IDevices operations, MeasurementDevice value, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.InsertDeviceWithHttpMessagesAsync(value, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.InsertDeviceWithHttpMessagesAsync(value, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <param name='operations'>

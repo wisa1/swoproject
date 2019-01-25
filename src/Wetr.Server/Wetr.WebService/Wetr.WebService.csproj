@@ -169,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Controllers\CommunitiesController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -304,6 +305,10 @@
     <ProjectReference Include="..\Wetr.Server.BL.Implementation\Wetr.Server.BL.Implementation.csproj">
       <Project>{CEACAE82-36DF-4F9A-976A-826406013371}</Project>
       <Name>Wetr.Server.BL.Implementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wetr.Server.Common\Wetr.Server.Common.csproj">
+      <Project>{69A5EE7A-F516-444E-B11F-61360D57F39F}</Project>
+      <Name>Wetr.Server.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wetr.Server.DAL.DTO\Wetr.Server.DAL.DTO.csproj">
       <Project>{1383906A-AE75-4553-8641-BD9847B3ABAB}</Project>
