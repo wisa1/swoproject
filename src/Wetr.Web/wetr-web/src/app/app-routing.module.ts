@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes} from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StationsComponent } from './stations/stations.component';
+import { StationDetailComponent } from './station-detail/station-detail.component';
+import { StationAddComponent } from './station-add/station-add.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'stations', component: StationsComponent }
+  { path: 'stations', component: StationsComponent },
+  { path: 'stations/:id', component: StationDetailComponent },
+  { path: 'addStation', component: StationAddComponent }
 ];
 
 @NgModule({

@@ -2,6 +2,10 @@
   height: 300px;
 }
 
+/deep/ .detailContainer {
+  margin: 15px;
+}
+
 /deep/ app-station-detail {
   width: -webkit-fill-available !important;
 }

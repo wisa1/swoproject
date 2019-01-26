@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { MeasurementDevice, Community, MeasurementsService, MeasurementTypesService, MeasurementType } from '../Core';
+import { MeasurementDevice, Community, MeasurementsService, MeasurementTypesService, MeasurementType, DevicesService } from '../Core';
 import { CommunitiesService } from '../Core/api/communities.service';
 import { formatDate } from '@angular/common';
 import { GroupedResultRecord } from '../Core/model/GroupedResultRecord';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-station-detail',
@@ -11,33 +12,41 @@ import { GroupedResultRecord } from '../Core/model/GroupedResultRecord';
 })
 export class StationDetailComponent implements OnInit {
 
-  @Input() device: MeasurementDevice;
-  communities: Community[];
+  device: MeasurementDevice;
+  community: Community;
   results: GroupedResultRecord[];
   lastValues: GroupedResultRecord[];
   measurementTypes: MeasurementType[];
   displayedColumns: string[] = ['Value', 'Type'];
 
-  constructor(private communitiesService: CommunitiesService,
+  constructor(private deviceService: DevicesService,
+              private communitiesService: CommunitiesService,
               private measurementsService: MeasurementsService,
-              private measurementTypesService: MeasurementTypesService) { }
+              private measurementTypesService: MeasurementTypesService,
+              private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.communitiesService.communitiesGetAllCommunities().subscribe(
-      val => this.communities = val
+    //Device from url parameter
+    this.activeRoute.params.subscribe(
+      params => this.deviceService.devicesGetDeviceById(params['id']).subscribe(
+        res => {
+          this.device = res;
+
+          //get Community
+          this.communitiesService.communitiesGetCommunityById(this.device.CommunityID).subscribe(
+            res => this.community = res
+          );
+
+          //Get Latest Measurmeents
+          this.getMeasurements(this.device);
+        }
+      )
     );
 
+    //Get Colleciton of all Measurement Types
     this.measurementTypesService.measurementTypesGetAllTypes().subscribe(
       val => this.measurementTypes = val
     );
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.getMeasurements(this.device);
-  }
-
-  printcurrent(): void {
-    console.log(this.results);
   }
 
   getCommunityName(device: MeasurementDevice): string {

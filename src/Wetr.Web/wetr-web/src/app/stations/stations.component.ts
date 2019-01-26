@@ -16,8 +16,6 @@ export class StationsComponent implements OnInit {
   public devices: MeasurementDevice[];
   public communities: Community[];
 
-  public selectedDevice: MeasurementDevice;
-  public selectedDeviceID = -1;
   displayedColumns: string[] = ['ShownInDashboard', 'Name', 'Address', 'City'];
 
   constructor(private devicesService: DevicesService,
@@ -33,26 +31,20 @@ export class StationsComponent implements OnInit {
     );
   }
 
-  setSelectedDevice(device: MeasurementDevice) {
-    this.selectedDevice = device;
-    console.log(this.selectedDevice);
-  }
-
   deviceIsInDashboard(device: MeasurementDevice): boolean {
     return MeasurementDeviceLogic.deviceIsInDashboard(device);
   }
 
+  /*
   invertIsInDashboard(device: MeasurementDevice) {
     MeasurementDeviceLogic.invertIsInDashboard(device);
   }
+  */
 
   getCommunityName(device): string {
-    return this.communities.find(comm => device.CommunityID == comm.ID).Name;
-  }
-
-  rowSelected(row: MatRow) {
-    console.log(row);
-    this.selectedDevice = (row as MeasurementDevice);
-    this.selectedDeviceID = (row as MeasurementDevice).ID;
+    if ( device !== undefined ) {
+      return this.communities.find(comm => device.CommunityID == comm.ID).Name;
+    }
+    return '';
   }
 }

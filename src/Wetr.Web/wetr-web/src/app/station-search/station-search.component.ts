@@ -9,10 +9,10 @@ import { DevicesService } from '../Core';
   styleUrls: ['./station-search.component.css']
 })
 export class StationSearchComponent implements OnInit {
-
   isLoading = false;
   foundStations: MeasurementDevice[] = [];
   keyup = new EventEmitter<string>();
+  searchTerm: string;
 
   @Output() stationSelected = new EventEmitter<MeasurementDevice>();
 
@@ -24,18 +24,20 @@ export class StationSearchComponent implements OnInit {
       distinctUntilChanged(),
       tap(() => this.isLoading = true),
       switchMap(searchTerm => this.devicesService.devicesGetAllDevices()),
-      tap(() => this.isLoading = false))
-      .subscribe(stations => this.foundStations = stations);
+      tap(() => this.isLoading = false),
+      ).subscribe((stations) => {
+        console.log(stations);
+        this.foundStations = stations.filter(x => x.DeviceName.includes(this.searchTerm));
+        console.log(this.foundStations);
+      });
   }
 
-  /*
-  ngOnInit() {
-    this.keyup.pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-      tap(() => this.isLoading = true), switchMap(searchTerm => this.devicesService.getAllSearch(searchTerm)),
-      tap(() => this.isLoading = false)).subscribe(books => this.foundBooks = books);
+  updateSearchTerm(event) {
+    this.searchTerm = event.target.value;
+    console.log(this.searchTerm);
   }
-  */
 
+  resetStations() {
+    this.foundStations = [];
+  }
 }

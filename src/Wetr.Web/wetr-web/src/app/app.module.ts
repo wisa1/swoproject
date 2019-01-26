@@ -23,6 +23,7 @@ import { AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
 import { MeasurementTypesApi } from './Core/api/MeasurementTypesApi';
 import { MeasurementsService } from './Core';
 import { StationSearchComponent } from './station-search/station-search.component';
+import { StationAddComponent } from './station-add/station-add.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { StationSearchComponent } from './station-search/station-search.componen
     NavigationComponent,
     StationsComponent,
     StationDetailComponent,
-    StationSearchComponent
+    StationSearchComponent,
+    StationAddComponent
   ],
   imports: [
     BrowserModule,

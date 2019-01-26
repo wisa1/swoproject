@@ -1,34 +1,32 @@
+<div class="detailContainer">
+  <h2 *ngIf="device">{{device.DeviceName}}</h2>
+  <h3 *ngIf="device"> <span>{{device.Address}}, </span>
+                      <span *ngIf="community">{{community.Name}}</span></h3>
 
-<h2 *ngIf="device">{{device.DeviceName}}</h2>
-<h3 *ngIf="device"> <span>{{device.Address}}, </span>
-                    <span>{{getCommunityName(device)}}</span></h3>
+  <div class="mapContainer">
+    <agm-map *ngIf="device" [latitude]="device.Latitude" [longitude]="device.Longitude" [zoom]="12" [zoomControl]="false">
+      <agm-marker [latitude]="device.Latitude" [longitude]="device.Longitude"></agm-marker>
+    </agm-map>
+  </div>
 
-<div class="mapContainer">
-  <agm-map *ngIf="device" [latitude]="device.Latitude" [longitude]="device.Longitude" [zoom]="12" [zoomControl]="false">
-    <agm-marker [latitude]="device.Latitude" [longitude]="device.Longitude"></agm-marker>
-  </agm-map>
+  <div class="lastMeasurmentsContainer">
+    <table mat-table [dataSource]="lastValues">
+      <!--Value-->
+      <ng-container matColumnDef="Value">
+        <th mat-header-cell *matHeaderCellDef> Value </th>
+        <td mat-cell *matCellDef="let result"> {{result.Value | number: '1.0-2'}} </td>
+      </ng-container>
+
+      <!--MeasurementType-->
+      <ng-container matColumnDef="Type">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let result"> {{getMeasurementType(result).Description}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
 </div>
-
-<div class="lastMeasurmentsContainer">
-  <button (click)="printcurrent()">print</button>
-
-  <table mat-table [dataSource]="lastValues">
-    <!--Value-->
-    <ng-container matColumnDef="Value">
-      <th mat-header-cell *matHeaderCellDef> Value </th>
-      <td mat-cell *matCellDef="let result"> {{result.Value}} </td>
-    </ng-container>
-
-    <!--MeasurementType-->
-    <ng-container matColumnDef="Type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let result"> {{getMeasurementType(result).Description}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-</div>
-
 

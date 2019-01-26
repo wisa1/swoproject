@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MeasurementDevice } from '../Core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -9,11 +10,16 @@ import { MeasurementDevice } from '../Core';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent {
-  constructor() {}
+  constructor(private router: Router,
+              private route: ActivatedRoute) {}
+
+  @ViewChild('searchTerm') searchBox;
 
   stationSelected(device: MeasurementDevice) {
     console.log(device);
-    //this.router.navigate(['..books', book.id], {relativeTo: this.route});
+    this.router.navigate(['stations', device.ID], {relativeTo: this.route});
   }
+
+
 
 }

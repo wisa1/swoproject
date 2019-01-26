@@ -1,0 +1,8 @@
+/deep/ .results {
+  font-size: 12px;
+}
+
+/deep/ .column {
+  position: fixed;
+  right: 3%;
+}
