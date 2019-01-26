@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MeasurementDevice } from '../Core';
 
 @Component({
   selector: 'app-navigation',
@@ -9,5 +10,10 @@ import { map } from 'rxjs/operators';
 })
 export class NavigationComponent {
   constructor() {}
+
+  stationSelected(device: MeasurementDevice) {
+    console.log(device);
+    //this.router.navigate(['..books', book.id], {relativeTo: this.route});
+  }
 
 }

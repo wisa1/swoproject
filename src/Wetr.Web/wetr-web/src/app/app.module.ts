@@ -22,6 +22,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
 import { MeasurementTypesApi } from './Core/api/MeasurementTypesApi';
 import { MeasurementsService } from './Core';
+import { StationSearchComponent } from './station-search/station-search.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MeasurementsService } from './Core';
     DashboardComponent,
     NavigationComponent,
     StationsComponent,
-    StationDetailComponent
+    StationDetailComponent,
+    StationSearchComponent
   ],
   imports: [
     BrowserModule,

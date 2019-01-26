@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { MeasurementDevice, Community, MeasurementsService, MeasurementTypesService } from '../Core';
+import { MeasurementDevice, Community, MeasurementsService, MeasurementTypesService, MeasurementType } from '../Core';
 import { CommunitiesService } from '../Core/api/communities.service';
 import { formatDate } from '@angular/common';
 import { GroupedResultRecord } from '../Core/model/GroupedResultRecord';
@@ -14,8 +14,9 @@ export class StationDetailComponent implements OnInit {
   @Input() device: MeasurementDevice;
   communities: Community[];
   results: GroupedResultRecord[];
+  lastValues: GroupedResultRecord[];
   measurementTypes: MeasurementType[];
-  displayedColumns: string[] = ['Value'];
+  displayedColumns: string[] = ['Value', 'Type'];
 
   constructor(private communitiesService: CommunitiesService,
               private measurementsService: MeasurementsService,
@@ -32,8 +33,6 @@ export class StationDetailComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('changing to device');
-    console.log(this.device);
     this.getMeasurements(this.device);
   }
 
@@ -42,7 +41,11 @@ export class StationDetailComponent implements OnInit {
   }
 
   getCommunityName(device: MeasurementDevice): string {
-    return this.communities.find(val => device.CommunityID == val.ID).Name;
+    let comm;
+    comm = this.communities.find(val => device.CommunityID == val.ID);
+    if ( comm != undefined ) {
+      return comm.Name;
+    }
   }
 
   getMeasurements(device: MeasurementDevice) {
@@ -57,11 +60,35 @@ export class StationDetailComponent implements OnInit {
         0,
         this.device.ID,
         this.device.latitude,
-        this.device.longitude,
-        undefined,
+        this.device.longitude, null,
+
         fromDate,
         toDate,
-        0).subscribe(val => this.results = val);
+        0).subscribe((measurements: GroupedResultRecord[]) => {
+          measurements.sort(this.sortResultsDescending);
+
+          this.lastValues = [];
+          for (let measurement of measurements) {
+
+            let vals = this.lastValues.find(val => val.MeasurementTypeID == measurement.MeasurementTypeID);
+            if (vals === undefined ) {
+              this.lastValues.push(measurement);
+            }
+          }
+        });
     }
+  }
+
+  getMeasurementType(result: GroupedResultRecord): MeasurementType {
+    if (result != undefined && this.measurementTypes != undefined) {
+      return this.measurementTypes.find(v => v.ID == result.MeasurementTypeID);
+    }
+  }
+
+  sortResultsDescending(m1, m2: GroupedResultRecord): number {
+    if (m1.dateTimeStart > m2.dateTimeStart){
+      return 1;
+    }
+    return -1;
   }
 }

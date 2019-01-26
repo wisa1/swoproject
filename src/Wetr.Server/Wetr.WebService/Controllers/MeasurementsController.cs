@@ -54,7 +54,7 @@ namespace Wetr.WebService.Controllers
         [Route("measurements/query", Name = nameof(QueryMeasurements))]
         public async Task<HttpResponseMessage> QueryMeasurements(AggregationType aggregate, PeriodType period, 
                                                                  int deviceId, double? latitude = null, 
-                                                                 double? longitude = null, int measurementTypeId = 1, 
+                                                                 double? longitude = null, int? measurementTypeId = null, 
                                                                  DateTime? dateFrom = null, DateTime? dateTo = null, int? radiusKm = 0)
         {
             try
@@ -64,8 +64,13 @@ namespace Wetr.WebService.Controllers
                 device.Latitude = latitude ?? 0;
                 device.Longitude = longitude ?? 0;
 
-                MeasurementType type = new MeasurementType();
-                type.ID = measurementTypeId;
+                MeasurementType type = null;
+                if (measurementTypeId != null)
+                {
+                    type = new MeasurementType();
+                    type.ID = measurementTypeId ?? 0;
+                }
+               
 
                 MeasurementFilter filter = new MeasurementFilter()
                 {
