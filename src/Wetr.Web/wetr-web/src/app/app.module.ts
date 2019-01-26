@@ -9,7 +9,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatCheckbox, MatCheckboxModule, MatTableModule, MatGridListModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatCheckbox, MatCheckboxModule, MatTableModule, MatGridListModule, MatSelect, MatSelectModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { StationsComponent } from './stations/stations.component';
 
 import { environment } from 'src/environments/environment';
@@ -55,6 +55,9 @@ import { StationAddComponent } from './station-add/station-add.component';
     AgmCoreModule.forRoot({apiKey: 'AIzaSyD_ZP3Mj-PMi1mG_Bfq5K8DJxz3LntJZ2o'}), //Maps
     FormsModule,
     NgbModule.forRoot(),
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [GoogleMapsAPIWrapper],
   bootstrap: [AppComponent]

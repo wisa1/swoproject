@@ -17,9 +17,7 @@ export class NavigationComponent {
 
   stationSelected(device: MeasurementDevice) {
     console.log(device);
+
     this.router.navigate(['stations', device.ID], {relativeTo: this.route});
   }
-
-
-
 }

@@ -42,7 +42,7 @@ export class StationsComponent implements OnInit {
   */
 
   getCommunityName(device): string {
-    if ( device !== undefined ) {
+    if ( this.communities !== undefined && device !== undefined ) {
       return this.communities.find(comm => device.CommunityID == comm.ID).Name;
     }
     return '';

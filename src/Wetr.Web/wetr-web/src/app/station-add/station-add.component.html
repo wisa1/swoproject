@@ -1,3 +1,32 @@
-<p>
-  station-add works!
-</p>
+<div class="container">
+  <h1>Add a new Station</h1>
+  <form (ngSubmit)="onSubmit()" #addStationForm="ngForm">
+    <div class="form-group">
+      <label for="name">Device Name</label>
+      <input type="text" class="form-control" id="deviceName" required [(ngModel)]="device.deviceName" name="deviceName">
+    </div>
+
+    <div class="form-group">
+        <label for="alterEgo">Address</label>
+        <input type="text" class="form-control" id="alterEgo" required [(ngModel)]="device.address" name="address">
+    </div>
+
+    <div class="form-group">
+        <label for="name">Community</label>
+        <select class="form-control" id="power" required [(ngModel)]="device.communityID" name="community">
+            <option *ngFor="let community of communities" [value]="community.ID">{{community.Name}}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="alterEgo">Latitude</label>
+        <input type="text" class="form-control" id="alterEgo" required [(ngModel)]="device.latitude" name="latitude">
+    </div>
+
+    <div class="form-group">
+        <label for="alterEgo">Longitude</label>
+        <input type="text" class="form-control" id="alterEgo" required [(ngModel)]="device.longitude" name="longitude">
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!addStationForm.form.valid">Submit</button>
+  </form>
+</div>
