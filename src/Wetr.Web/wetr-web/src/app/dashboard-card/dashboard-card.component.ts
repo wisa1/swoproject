@@ -84,7 +84,6 @@ export class DashboardCardComponent implements OnInit {
         this.lineChartData = [{data: this.deviceData, label: 'Temperature history of the last 7 days'}];
         console.log(this.lineChartData);
       });
-    )
   }
 
   getCommunity(): string {
