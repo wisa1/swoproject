@@ -25,9 +25,6 @@ export class DashboardComponent implements OnInit {
       i++;
       key = localStorage.key(i);
     }
-
-    console.log(this.devices);
-
   }
 
 }

@@ -36,7 +36,6 @@ export class AuthService {
   }
 
   public handleAuthentication(): void {
-    console.log('handleAuthentication');
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.localLogin(authResult);
@@ -50,7 +49,6 @@ export class AuthService {
   }
 
   private localLogin(authResult): void {
-    console.log('localLogin');
     // Set isLoggedIn flag in localStorage
     localStorage.setItem('isLoggedIn', 'true');
     // Set the time that the access token will expire at

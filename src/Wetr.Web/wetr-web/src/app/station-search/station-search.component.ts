@@ -26,15 +26,12 @@ export class StationSearchComponent implements OnInit {
       switchMap(searchTerm => this.devicesService.devicesGetAllDevices()),
       tap(() => this.isLoading = false),
       ).subscribe((stations) => {
-        console.log(stations);
         this.foundStations = stations.filter(x => x.DeviceName.includes(this.searchTerm));
-        console.log(this.foundStations);
       });
   }
 
   updateSearchTerm(event) {
     this.searchTerm = event.target.value;
-    console.log(this.searchTerm);
   }
 
   resetStations() {

@@ -18,7 +18,6 @@ export class NavigationComponent {
   @ViewChild('searchTerm') searchBox;
 
   stationSelected(device: MeasurementDevice) {
-    console.log(device);
 
     this.router.navigate(['stations', device.ID], {relativeTo: this.route});
   }

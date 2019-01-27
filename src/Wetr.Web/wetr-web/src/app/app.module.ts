@@ -33,6 +33,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthService } from './auth/auth.service';
 import { CallbackComponent } from './callback/callback.component';
 
+import { ChartsModule} from 'ng2-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +75,8 @@ import { CallbackComponent } from './callback/callback.component';
     OwlNativeDateTimeModule,
     FlexLayoutModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    ChartsModule,
   ],
   providers: [GoogleMapsAPIWrapper, AuthService],
   bootstrap: [AppComponent]

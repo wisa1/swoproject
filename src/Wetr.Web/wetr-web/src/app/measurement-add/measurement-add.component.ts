@@ -42,7 +42,6 @@ export class MeasurementAddComponent implements OnInit {
             this.measurement.deviceID = res.ID;
             this.measurementService.measurementsInsertMeasurement(this.measurement).subscribe(
               () => {
-                console.log(this.measurement);
                 this.router.navigate(['/stations/' + this.measurement.deviceID]);
               }
             );

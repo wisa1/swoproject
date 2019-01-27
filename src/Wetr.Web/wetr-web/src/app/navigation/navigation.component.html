@@ -25,7 +25,7 @@
 
       <button id="qsLoginBtn"
         mat-raised-button
-        class="btn btn-primary my-2 my-sm-0"
+        class="btn btn-primary my-2 my-sm-0 loginbutton"
         *ngIf="!auth.isAuthenticated()"
         (click)="auth.login()" type="button">
           Log In
@@ -33,7 +33,7 @@
 
       <button id="qsLogoutBtn"
         mat-raised-button
-        class="btn btn-primary my-2 my-sm-0"
+        class="btn btn-primary my-2 my-sm-0 loginbutton"
         *ngIf="auth.isAuthenticated()"
         (click)="auth.logout()" type="button">
           Log Out
