@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MeasurementDevice } from '../Core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -11,7 +12,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class NavigationComponent {
   constructor(private router: Router,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              public auth: AuthService) {}
 
   @ViewChild('searchTerm') searchBox;
 

@@ -4,6 +4,7 @@ import { CommunitiesService } from '../Core/api/communities.service';
 import { formatDate } from '@angular/common';
 import { GroupedResultRecord } from '../Core/model/GroupedResultRecord';
 import { ActivatedRoute } from '@angular/router';
+import { MeasurementDeviceLogic } from '../BusinessLogic/MeasurementDeviceLogic';
 
 @Component({
   selector: 'app-station-detail',
@@ -100,4 +101,19 @@ export class StationDetailComponent implements OnInit {
     }
     return -1;
   }
+
+  deviceIsInDashboard(): boolean {
+    if (this.device !== undefined){
+      return MeasurementDeviceLogic.deviceIsInDashboard(this.device);
+    }
+    return false;
+
+  }
+
+
+  invertIsInDashboard() {
+    MeasurementDeviceLogic.invertIsInDashboard(this.device);
+  }
+
+
 }

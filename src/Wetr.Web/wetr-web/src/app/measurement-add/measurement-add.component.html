@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>Add a new Measurement</h1>
+  <form (ngSubmit)="onSubmit()" #addMeasurementForm="ngForm" [hidden]="">
+
+    <div class="form-group">
+        <label for="MeasurementTime">Measurement Time</label>
+
+        <input [owlDateTimeTrigger]="dt" [owlDateTime]="dt" required [(ngModel)]="measurement.timestamp" name ="timestamp">
+        <owl-date-time #dt></owl-date-time>
+    </div>
+
+
+    <div class="form-group">
+        <label for="MeasurementTyped">Measurement Type</label>
+        <select class="form-control" id="measurementType" required [(ngModel)]="measurement.typeID" name="community">
+            <option *ngFor="let type of measurementTypes" [value]="type.ID">{{type.Description}}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="value">Value</label>
+        <input type="number" class="form-control" id="value" required [(ngModel)]="measurement.value" name="value">
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!addMeasurementForm.form.valid">Submit</button>
+  </form>
+</div>

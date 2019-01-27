@@ -9,8 +9,9 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatCheckbox, MatCheckboxModule, MatTableModule, MatGridListModule, MatSelect, MatSelectModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatCheckbox, MatCheckboxModule, MatTableModule, MatGridListModule, MatSelect, MatSelectModule, MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
 import { StationsComponent } from './stations/stations.component';
+import { MatButtonModule } from '@angular/material/button';
 
 import { environment } from 'src/environments/environment';
 import { ApiModule } from './Core/api.module';
@@ -24,6 +25,13 @@ import { MeasurementTypesApi } from './Core/api/MeasurementTypesApi';
 import { MeasurementsService } from './Core';
 import { StationSearchComponent } from './station-search/station-search.component';
 import { StationAddComponent } from './station-add/station-add.component';
+import { MeasurementAddComponent } from './measurement-add/measurement-add.component';
+
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AuthService } from './auth/auth.service';
+import { CallbackComponent } from './callback/callback.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +41,10 @@ import { StationAddComponent } from './station-add/station-add.component';
     StationsComponent,
     StationDetailComponent,
     StationSearchComponent,
-    StationAddComponent
+    StationAddComponent,
+    MeasurementAddComponent,
+    DashboardCardComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -57,9 +68,14 @@ import { StationAddComponent } from './station-add/station-add.component';
     NgbModule.forRoot(),
     MatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    FlexLayoutModule,
+    MatButtonModule,
+    MatCardModule
   ],
-  providers: [GoogleMapsAPIWrapper],
+  providers: [GoogleMapsAPIWrapper, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

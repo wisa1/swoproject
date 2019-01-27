@@ -1,0 +1,9 @@
+.example-card {
+  max-width: 400px;
+  margin: 15px;
+}
+
+.example-header-image {
+  background-image: url('https://www.acurite.com/media/catalog/product/cache/1/thumbnail/600x/17f82f742ffe127f42dca9de82fb58b1/0/0/00509-800x800.jpg');
+  background-size: cover;
+}

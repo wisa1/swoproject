@@ -26,7 +26,14 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+  </div>
 
+  <div class="stationDetailActionContainer">
+    <div class="detailsActionOne">
+      <mat-checkbox [checked]="deviceIsInDashboard()" (click)="invertIsInDashboard()"></mat-checkbox>
+      <span>Shown in Dashboard</span>
+    </div>
+    <div [routerLink]="['./addMeasurement']" class="detailsActionTwo"><span>Add Measurement</span></div>
   </div>
 </div>
 

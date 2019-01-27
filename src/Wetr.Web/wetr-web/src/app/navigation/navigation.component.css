@@ -19,3 +19,11 @@
 .router-link-active{
   background-color: cornflowerblue;
 }
+
+/deep/ .mat-raised-button{
+  margin-left: 50px !important;
+}
+
+a {
+  cursor: pointer;
+}
