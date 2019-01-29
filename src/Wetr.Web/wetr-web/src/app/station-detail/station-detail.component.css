@@ -22,6 +22,7 @@
   background: #3f51b5;
   margin: auto;
   padding: 10px;
+  color:white;
 }
 
 .detailsActionOne{
@@ -32,8 +33,20 @@
 }
 
 .detailsActionTwo{
-  margin-left: 15%;
+  float:left;
+  width: 50%;
   height: 50px;
   text-align: center;
+  cursor: pointer;
+}
+
+/deep/ .mat-checkbox-inner-container  {
+  margin-bottom: 3px !important;
+  margin-right: 9px !important;
+  margin-top: 1px !important;
+}
+
+/deep/ .basechart{
+  height: 250px !important;
 }
 

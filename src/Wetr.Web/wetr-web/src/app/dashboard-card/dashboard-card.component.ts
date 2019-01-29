@@ -41,9 +41,7 @@ export class DashboardCardComponent implements OnInit {
   ];
 
   public deviceData: number[] = [];
-  public lineChartData:Array<any> = [
-    {data: this.deviceValues},
-  ];
+  public lineChartData: Array<any> = null;
   public lineChartLegend = true;
   public lineChartOptions: any = {
     responsive: false,
@@ -80,8 +78,7 @@ export class DashboardCardComponent implements OnInit {
         for (let result of results) {
           this.deviceData.push(result.Value);
         }
-        console.log(this.deviceData);
-        this.lineChartData = [{data: this.deviceData, label: 'Temperature history of the last 7 days'}];
+        this.lineChartData = [{data: this.deviceData, label: 'Temperature history of the last day'}];
         console.log(this.lineChartData);
       });
   }

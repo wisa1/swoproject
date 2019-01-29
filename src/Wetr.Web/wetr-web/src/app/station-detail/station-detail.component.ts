@@ -5,6 +5,7 @@ import { formatDate } from '@angular/common';
 import { GroupedResultRecord } from '../Core/model/GroupedResultRecord';
 import { ActivatedRoute } from '@angular/router';
 import { MeasurementDeviceLogic } from '../BusinessLogic/MeasurementDeviceLogic';
+import { MatDatepickerToggle } from '@angular/material';
 
 @Component({
   selector: 'app-station-detail',
@@ -17,9 +18,65 @@ export class StationDetailComponent implements OnInit {
   community: Community;
   results: GroupedResultRecord[];
   lastValues: GroupedResultRecord[];
+
+  minTempValues: GroupedResultRecord[];
+  avgTempValues: GroupedResultRecord[];
+  maxTempValues: GroupedResultRecord[];
+
   measurementTypes: MeasurementType[];
   displayedColumns: string[] = ['Value', 'Type'];
+  isInDashboard = false;
 
+  //#region  chart stuff
+
+  public lineChartData: Array<any> = undefined;
+  //public lineChartLabels:Array<any> = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'];
+  public lineChartLabels: Array<any> = [];
+    public lineChartOptions: any = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales : {
+      yAxes: [{
+         ticks: {
+            steps : 3,
+            stepValue : 20,
+            max : 35,
+          }
+      }]
+    }
+  };
+  public lineChartLegend: boolean = false;
+  public lineChartType = 'line';
+  public lineChartColors: Array<any> = [
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(0, 0, 255, 1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+    { // dark grey
+      backgroundColor: 'rgba(77,83,96,0.2)',
+      borderColor: 'rgba(0, 255, 0, 1)',
+      pointBackgroundColor: 'rgba(77,83,96,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    },
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(255, 0, 0, 1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    }
+  ];
+
+
+
+  //#endregion
   constructor(private deviceService: DevicesService,
               private communitiesService: CommunitiesService,
               private measurementsService: MeasurementsService,
@@ -40,6 +97,8 @@ export class StationDetailComponent implements OnInit {
 
           //Get Latest Measurmeents
           this.getMeasurements(this.device);
+          this.getTempValues();
+          this.isInDashboard = this.deviceIsInDashboard();
         }
       )
     );
@@ -48,6 +107,87 @@ export class StationDetailComponent implements OnInit {
     this.measurementTypesService.measurementTypesGetAllTypes().subscribe(
       val => this.measurementTypes = val
     );
+  }
+
+  getTempValues(): any {
+    let fromDate = new Date(new Date().getFullYear(), 0, 1);
+    let toDate = new Date(new Date().getFullYear(), 11, 31);
+
+    if (this.device !== undefined) {
+      this.measurementsService.measurementsQueryMeasurements(
+        3,
+        2,
+        this.device.ID,
+        this.device.latitude,
+        this.device.longitude,
+        1,
+        fromDate,
+        toDate, 0
+      ).subscribe(minValues => {
+        let results = [];
+        for (let result of minValues) {
+          results.push(Math.round(result.Value * 100) / 100;
+        }
+
+        if (this.lineChartData == undefined) {
+          this.lineChartData = [{data: results, label: 'min'}];
+        } else {
+          this.lineChartData.push({data: results, label: 'min'});
+        }
+        console.log(this.lineChartData);
+      });
+
+      this.measurementsService.measurementsQueryMeasurements(
+        2,
+        2,
+        this.device.ID,
+        this.device.latitude,
+        this.device.longitude,
+        1,
+        fromDate,
+        toDate, 0
+      ).subscribe(maxValues => {
+        let results = [];
+        for (let result of maxValues) {
+          results.push(Math.round(result.Value * 100) / 100;
+        }
+
+        if (this.lineChartData == undefined) {
+          this.lineChartData = [{data: results, label: 'max'}];
+        } else {
+          this.lineChartData.push({data: results, label: 'max'});
+        }
+        console.log(this.lineChartData);
+      });
+
+      this.measurementsService.measurementsQueryMeasurements(
+        4,
+        2,
+        this.device.ID,
+        this.device.latitude,
+        this.device.longitude,
+        1,
+        fromDate,
+        toDate, 0
+      ).subscribe(avgValues => {
+        let results = [];
+        let i = 1;
+        for (let result of avgValues) {
+          results.push(Math.round(result.Value * 100) / 100;
+          this.lineChartLabels.push('KW' + i);
+          i++;
+        }
+
+
+
+        if (this.lineChartData == undefined) {
+          this.lineChartData = [{data: results, label: 'avg'}];
+        } else {
+          this.lineChartData.push({data: results, label: 'avg'});
+        }
+        console.log(this.lineChartData);
+      });
+    }
   }
 
   getCommunityName(device: MeasurementDevice): string {
@@ -96,24 +236,24 @@ export class StationDetailComponent implements OnInit {
   }
 
   sortResultsDescending(m1, m2: GroupedResultRecord): number {
-    if (m1.dateTimeStart > m2.dateTimeStart){
+    if (m1.dateTimeStart > m2.dateTimeStart) {
       return 1;
     }
     return -1;
   }
 
   deviceIsInDashboard(): boolean {
-    if (this.device !== undefined){
-      return MeasurementDeviceLogic.deviceIsInDashboard(this.device);
+    if (this.device !== undefined) {
+      let inDashboard = MeasurementDeviceLogic.deviceIsInDashboard(this.device);
+      return inDashboard;
     }
     return false;
-
   }
-
 
   invertIsInDashboard() {
     MeasurementDeviceLogic.invertIsInDashboard(this.device);
   }
+
 
 
 }
